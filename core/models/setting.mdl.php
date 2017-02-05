@@ -50,7 +50,7 @@ class setting_mdl extends modelfactory {
     }
     
     function set_conf($key,$value,$immediately=false){
-        $key = preg_replace("/([^a-zA-Z0-9_\-\.]+)/e","", $key);
+        $key = preg_replace("/([^a-zA-Z0-9_\-\.]+)/","", $key);
 
         $key_arr = explode('.',$key);
         $k = array_shift($key_arr);

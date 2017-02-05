@@ -8,7 +8,7 @@
  * @support : http://www.meiu.cn
  * @copyright : (c)2010 - 2011 meiu.cn lingter@gmail.com
  */
-class exif{
+class exif_cla{
     function get_exif($file){
         if(!function_exists('exif_read_data')){
             return false;

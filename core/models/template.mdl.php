@@ -113,25 +113,65 @@ class template_mdl{
         $str = preg_replace ( "/\{([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff:]*\(([^{}]*)\))\}/", "<?php echo \\1;?>", $str );
         $str = preg_replace ( "/\{\\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff:]*\(([^{}]*)\))\}/", "<?php echo \\1;?>", $str );
         $str = preg_replace ( "/\{(\\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\}/", "<?php echo \\1;?>", $str );
-        $str = preg_replace("/\{(\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\}/es", "\$this->addquote('<?php echo \\1;?>')",$str);
-        $str = preg_replace ( "/\{([A-Z_\x7f-\xff][A-Z0-9_\x7f-\xff]*)\}/s", "<?php echo \\1;?>", $str );
+        $str = preg_replace("/\{img\s+(.+?)\}/is", "<?php echo img_path(\\1);?>",$str);
+
+        
+        /*$str = preg_replace("/\{(\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\}/es", "\$this->addquote('<?php echo \\1;?>')",$str);
         $str = preg_replace("/\{link(\s+.+?)\}/ies", "\$this->striplink('\\1')", $str);
         $str = preg_replace("/\{lang\s+(.+?)\}/ies", "\$this->striplang('\\1')",$str);
-        $str = preg_replace("/\{img\s+(.+?)\}/is", "<?php echo img_path(\\1);?>",$str);
         $str = preg_replace("/\{mp:(\w+)(\s+[^}]+)\}/ie", "\$this->mp_tag('\\1','\\2', '\\0')", $str);
         $str = preg_replace("/\{\/mp\}/ie", "\$this->end_mp_tag()", $str);
         $str = preg_replace("/\{filter:(\w+)(\s+.+?)\}/ie","\$this->do_filter('\\1','\\2')",$str);
-        $str = preg_replace("/\{thumbimg(\s+.+?)\}/ies","\$this->makethumbpath('\\1')",$str);
+        $str = preg_replace("/\{thumbimg(\s+.+?)\}/ies","\$this->makethumbpath('\\1')",$str);*/
+
+
+        if(PHP_VERSION<5){
+            $str = preg_replace("/\{(\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\}/es", "\$this->addquote('<?php echo \\1;?>')",$str);
+            $str = preg_replace("/\{([A-Z_\x7f-\xff][A-Z0-9_\x7f-\xff]*)\}/s", "<?php echo \\1;?>", $str );
+            $str = preg_replace("/\{link(\s+.+?)\}/ies", "\$this->striplink('\\1')", $str);
+            $str = preg_replace("/\{lang\s+(.+?)\}/ies", "\$this->striplang('\\1')",$str);
+            $str = preg_replace("/\{mp:(\w+)(\s+[^}]+)\}/ie", "\$this->mp_tag('\\1','\\2', '\\0')", $str);
+            $str = preg_replace("/\{\/mp\}/ie", "\$this->end_mp_tag()", $str);
+            $str = preg_replace("/\{filter:(\w+)(\s+.+?)\}/ie","\$this->do_filter('\\1','\\2')",$str);
+            $str = preg_replace("/\{thumbimg(\s+.+?)\}/ies","\$this->makethumbpath('\\1')",$str);
+        }else{
+            $str = preg_replace_callback("/\{(\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\}/s",function($r){
+                return $this->addquote('<?php echo '.$r[1].';?>');
+            },$str);
+            $str = preg_replace("/\{([A-Z_\x7f-\xff][A-Z0-9_\x7f-\xff]*)\}/s", "<?php echo \\1;?>", $str );
+            $str = preg_replace_callback("/\{link(\s+.+?)\}/is",function($r){
+                return $this->striplink($r[1]);
+            },$str);
+            $str = preg_replace_callback("/\{lang\s+(.+?)\}/is",function($r){
+                return $this->striplang($r[1]);
+            },$str);
+            $str = preg_replace_callback("/\{mp:(\w+)(\s+[^}]+)\}/i",function($r){
+                return $this->mp_tag($r[1],$r[2], $r[0]);
+            },$str);
+            $str = preg_replace_callback("/\{\/mp\}/i",function($r){
+                return $this->end_mp_tag();
+            },$str);
+            $str = preg_replace_callback("/\{filter:(\w+)(\s+.+?)\}/i",function($r){
+                return $this->do_filter($r[1],$r[2]);
+            },$str);
+            $str = preg_replace_callback("/\{thumbimg(\s+.+?)\}/is",function($r){
+                return $this->makethumbpath($r[1]);
+            },$str);
+        }
         
         $str = "<?php if(!defined('IN_MEIU')) exit('Access Denied'); ?>" . $str;
         return $str;
     }
     
+    function _replace_callback($str){
+
+    }
+
     function striplang($var) {
         $varr = explode('|',$var);
         $str = "<?php echo lang(\"".$varr[0]."\"";
         for($i=1;$i<count($varr);$i++){
-            $str .=',"'.preg_replace("/`(.+)`/U","{\\1}",$varr[$i]).'"';
+            $str .=',"'.str_replace('"','\"',preg_replace("/`(.+)`/U","{\\1}",$varr[$i])).'"';
         }
         $str .= '); ?>';
         return $str;

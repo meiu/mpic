@@ -1,0 +1,5 @@
+/cache/data/*.php
+/cache/templates/*.php
+/data
+/conf/config.php
+/conf/install.lock

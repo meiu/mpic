@@ -212,8 +212,8 @@ function env_check(&$env_items) {
         } elseif($key == 'attachmentupload') {
             $env_items[$key]['current'] = @ini_get('file_uploads') ? ini_get('upload_max_filesize') : 'unknow';
         } elseif($key == 'gdversion') {
-            $tmp = function_exists('gd_info') ? gd_info() : array();
-            $env_items[$key]['current'] = empty($tmp['GD Version']) ? 'noext' : $tmp['GD Version'];
+            $tmp = function_exists('gd_info') ? gd_info() : array();;
+            $env_items[$key]['current'] = empty($tmp['GD Version']) ? 'noext' : preg_replace('/[^\d\.]/', '', $tmp['GD Version']);
             unset($tmp);
         } elseif($key == 'diskspace') {
             if(function_exists('disk_free_space')) {
@@ -237,7 +237,7 @@ function env_check(&$env_items) {
         }
 
         $env_items[$key]['status'] = 1;
-        if($item['r'] != 'notset' && strcmp($env_items[$key]['current'], $item['r']) < 0) {
+        if($item['r'] != 'notset' && version_compare($env_items[$key]['current'], $item['r']) < 0) {
             $env_items[$key]['status'] = 0;
         }
         //没GD库不允许继续安装
@@ -599,7 +599,7 @@ function show_select_db(){
     if(function_exists('mysql_connect') || function_exists('mysqli_connect')){
         echo '<option value="mysql" '.($adp=='mysql'?'selected="selected"':'').'>Mysql</option>';
     }
-    if(function_exists('sqlite_open')){
+    if(function_exists('sqlite_open') || class_exists("SQLite3") || (function_exists('pdo_drivers') && in_array('sqlite',pdo_drivers()))){
         echo '<option value="sqlite" '.($adp=='sqlite'?'selected="selected"':'').'>Sqlite</option>';
     }
 
