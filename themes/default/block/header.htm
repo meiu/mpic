@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--{if isset($meu_head)}-->
+<!--{$meu_head}-->
+<!--{/if}-->
+<link rel="shortcut icon" href="{$base_path}favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="{$statics_path}img/main.css" />
+<link rel="stylesheet" type="text/css" href="{$style_path}images/style.css" />
+<script src="{$statics_path}js/jquery.js" type="text/javascript"></script>
+<!--[if IE]><link rel="stylesheet" type="text/css" href="{$style_path}images/ie.css" /><![endif]-->
+<!--[if IE 6]>
+<script type="text/javascript" src="{$statics_path}js/DD_belatedPNG.js"></script>
+<script type="text/javascript">
+	DD_belatedPNG.fix('.sprite,.png');
+</script>
+<![endif]-->
+<style type="text/css">
+body{
+    background:{$_config['bodybg']};
+}
+#tabs div.clear{
+    background:{$_config['headerbottom']};
+}
+#tabs li a.current{
+    background:{$_config['tablinkto']};
+    background:-moz-linear-gradient(center top , {$_config['tablinkfrom']},{$_config['tablinkto']});
+    background:-webkit-gradient(linear,0% 0%, 0% 100%, from({$_config['tablinkfrom']}), to({$_config['tablinkto']}));
+}
+a:link, a:visited {
+    color: {$_config['link_color']};
+ }
+a:hover,#settings_person a:hover {
+    color: {$_config['link_hover_color']};
+    background-color: {$_config['link_color']};
+}
+
+#header{ background-color:{$_config['header_bg']};}
+#header h1{ color:{$_config['header_h1']}; }
+#settings_person,#settings_person a,#head_notify,#head_notify a{
+    color:{$_config['settingtxt']};
+}
+#tabs a{
+    background-color:{$_config['tablinkbg']};
+    color:{$_config['tablink']};
+}
+#tabs ul a.current{
+   color: {$_config['tablinkcurrent']};
+}
+
+#tabs a:hover {
+   color: {$_config['tablinkhover']};
+   background-color: {$_config['tablinkhoverbg']};
+}
+.alertcolor{
+    color:{$_config['alertcolor']};
+}
+.titbg{
+    background:{$_config['titlebg']};
+}
+
+.sidebar .editform .label,.title_c{
+    color:{$_config['titlelabel']};
+}
+#meiu_float_box{
+    border:3px solid {$_config['boxborder']};
+}
+</style>
+<!--[if IE]>
+<style>
+#tabs li a.current{
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr={$_config['tablinkfrom']}, endColorstr={$_config['tablinkto']});
+}
+</style>
+<![endif]-->
+</head>
+
+<body>
+<noscript>
+  <div class="js_disabled_noti">
+    <div class="inner">
+      {lang no_script_notice}
+    </div>
+  </div>
+</noscript>
+{$page_head}
+<div id="header">
+    <h1>{if $site_logo}<img src="{img $site_logo}" alt="{$site_name}" class="png" />{else}{$site_name}{/if}</h1>
+    <div id="settings_person">
+        {$user_status}
+    </div>
+	<!--{if isset($update_info) && $update_info}-->
+	<div id="head_notify">
+		{if $update_info['return'] == 'new'}
+			{lang new_update_available|`$update_info['version']`|`$update_info['pubdate']`} 
+			<a href="{link ctl=update act=core version=$update_info['version']}">{lang update_immediately}</a> {lang or} 
+			<a href="{$update_info['package']}">{lang update_manually}</a>
+		{/if}
+	</div>
+	<!--{/if}-->
+    <div id="tabs">
+        <ul id="album_tabs">
+            <!--{if $nav_menu}-->
+            <!--{loop $nav_menu $k $v}-->
+                <!--{if $k+1<=10}-->
+                    <!--{if $v['type']==0}-->
+                        <li><a href="{link ctl=$v[url]}" <!--{if $v['url']==IN_CTL}-->class="current"<!--{/if}-->>{$v['name']}</a></li>
+                    <!--{else}-->
+                        <li><a href="{$v['url']}">{$v['name']}</a></li>
+                    <!--{/if}-->
+                <!--{/if}-->
+            <!--{/loop}-->
+            <!--{/if}-->
+			<!--{if $loggedin}-->
+            <li class="manage"><a href="{link ctl=setting act=nav}" title="{lang setting_nav}"><span class="i_setting sprite"></span></a></li>
+			<!--{/if}-->
+        </ul>
+        <ul id="menu_icons">
+            <!--{if $loggedin}-->
+                <li class="trash"><a href="{link ctl=trash}" title="{lang trash_title}"><span class="{if $trash_status}i_trash_full{else}i_trash{/if} sprite">{lang trash}</span></a></li>
+            <!--{/if}-->
+        </ul>
+        <div class="clear"></div>
+    </div>
+</div>
+{$page_crumb}

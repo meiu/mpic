@@ -1,0 +1,25 @@
+<div class="box_title titbg">
+    <div class="closer sprite i_close" onclick="Mui.box.close()"></div>
+    {lang move_photo_batch}
+</div>
+<div class="box_container">
+    <form id="photo_move_batch" action="{link ctl=photos act=do_move_batch}" method="post" onsubmit="return false;">
+        <input type="hidden" name="ids" value="{$sel_ids}" />
+        <div class="field">
+            <div class="label">{lang move_photo_to}</div>
+            <div class="ipts">
+                <select id="album_id" name="album_id">
+                    <!--{loop $albums_list $k $v}-->
+                        <option value="{$k}">{$v}</option>
+                    <!--{/loop}-->
+                </select>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="field">
+            <div class="label"> &nbsp;</div>
+            <div class="ipts"><input type="submit" value="{lang confirm}" class="ylbtn f_left" name="submit" onclick="Mui.form.sendPop('photo_move_batch')"> <input type="button" value="{lang cancel}" class="ml10 graybtn f_left" name="cancel" onclick="Mui.box.close()"></div>
+            <div class="clear"></div>
+        </div>
+    </form>
+</div>

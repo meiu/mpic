@@ -1,0 +1,224 @@
+<link href="{$statics_path}colorpicker/css/colorpicker.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{$statics_path}colorpicker/js/colorpicker.js"></script>
+<style>
+.colorSelector{
+    position:relative; float:left;width:27px;height:27px;overflow:hidden;display:block;
+}
+</style>
+<div class="field">
+    <div class="label">{lang sel_exists_style}</div>
+    <div class="ipts">
+        <label><input type="radio" name="style" value="blue" {if $_config['style'] == 'blue'}checked="checked"{/if} onclick="seltheme('blue')" /> {lang blue}</label>
+        <label><input type="radio" name="style" value="green" {if $_config['style'] == 'green'}checked="checked"{/if} onclick="seltheme('green')" /> {lang green}</label>
+        <label><input type="radio" name="style" value="purple" {if $_config['style'] == 'purple'}checked="checked"{/if} onclick="seltheme('purple')" /> {lang purple}</label>
+        <label><input type="radio" name="style" value="black" {if $_config['style'] == 'black'}checked="checked"{/if} onclick="seltheme('black')" /> {lang black}</label>
+        <label><input type="radio" name="style" value="brown" {if $_config['style'] == 'brown'}checked="checked"{/if} onclick="seltheme('brown')" /> {lang brown}</label>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="container_scroll">
+<div class="field">
+    <div class="label">{lang style_bodybg}</div>
+    <div class="ipts">
+    <div id="bodybg" class="colorSelector">
+        <div style="background-color: {$_config['bodybg']};">&nbsp;</div>
+    </div>
+    <input type="text" name="bodybg" class="inputstyle iptw1" value="{$_config['bodybg']}" />
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="field">
+    <div class="label">{lang style_link_color}</div>
+    <div class="ipts">
+    <div id="link_color" class="colorSelector">
+        <div style="background-color: {$_config['link_color']};">&nbsp;</div>
+    </div>
+    <input type="text" name="link_color" class="inputstyle iptw1" value="{$_config['link_color']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_link_hover_color}</div>
+    <div class="ipts">
+    <div id="link_hover_color" class="colorSelector">
+        <div style="background-color: {$_config['link_hover_color']};">&nbsp;</div>
+    </div>
+    <input type="text" name="link_hover_color" class="inputstyle iptw1" value="{$_config['link_hover_color']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_header_bg}</div>
+    <div class="ipts">
+    <div id="header_bg" class="colorSelector">
+        <div style="background-color: {$_config['header_bg']};">&nbsp;</div>
+    </div>
+    <input type="text" name="header_bg" class="inputstyle iptw1" value="{$_config['header_bg']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_header_h1}</div>
+    <div class="ipts">
+    <div id="header_h1" class="colorSelector">
+        <div style="background-color: {$_config['header_h1']};">&nbsp;</div>
+    </div>
+    <input type="text" name="header_h1" class="inputstyle iptw1" value="{$_config['header_h1']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_headerbottom}</div>
+    <div class="ipts">
+    <div id="headerbottom" class="colorSelector">
+        <div style="background-color: {$_config['headerbottom']};">&nbsp;</div>
+    </div>
+    <input type="text" name="headerbottom" class="inputstyle iptw1" value="{$_config['headerbottom']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_settingtxt}</div>
+    <div class="ipts">
+    <div id="settingtxt" class="colorSelector">
+        <div style="background-color: {$_config['settingtxt']};">&nbsp;</div>
+    </div>
+    <input type="text" name="settingtxt" class="inputstyle iptw1" value="{$_config['settingtxt']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_tablinkbg}</div>
+    <div class="ipts">
+    <div id="tablinkbg" class="colorSelector">
+        <div style="background-color: {$_config['tablinkbg']};">&nbsp;</div>
+    </div>
+    <input type="text" name="tablinkbg" class="inputstyle iptw1" value="{$_config['tablinkbg']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_tablink}</div>
+    <div class="ipts">
+    <div id="tablink" class="colorSelector">
+        <div style="background-color: {$_config['tablink']};">&nbsp;</div>
+    </div>
+    <input type="text" name="tablink" class="inputstyle iptw1" value="{$_config['tablink']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_tablinkcurrent}</div>
+    <div class="ipts">
+    <div id="tablinkcurrent" class="colorSelector">
+        <div style="background-color: {$_config['tablinkcurrent']};">&nbsp;</div>
+    </div>
+    <input type="text" name="tablinkcurrent" class="inputstyle iptw1" value="{$_config['tablinkcurrent']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_tablinkhover}</div>
+    <div class="ipts">
+    <div id="tablinkhover" class="colorSelector">
+        <div style="background-color: {$_config['tablinkhover']};">&nbsp;</div>
+    </div>
+    <input type="text" name="tablinkhover" class="inputstyle iptw1" value="{$_config['tablinkhover']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_tablinkhoverbg}</div>
+    <div class="ipts">
+    <div id="tablinkhoverbg" class="colorSelector">
+        <div style="background-color: {$_config['tablinkhoverbg']};">&nbsp;</div>
+    </div>
+    <input type="text" name="tablinkhoverbg" class="inputstyle iptw1" value="{$_config['tablinkhoverbg']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_tablinkfrom}</div>
+    <div class="ipts">
+    <div id="tablinkfrom" class="colorSelector">
+        <div style="background-color: {$_config['tablinkfrom']};">&nbsp;</div>
+    </div>
+    <input type="text" name="tablinkfrom" class="inputstyle iptw1" value="{$_config['tablinkfrom']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_tablinkto}</div>
+    <div class="ipts">
+    <div id="tablinkto" class="colorSelector">
+        <div style="background-color: {$_config['tablinkto']};">&nbsp;</div>
+    </div>
+    <input type="text" name="tablinkto" class="inputstyle iptw1" value="{$_config['tablinkto']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_alertcolor}</div>
+    <div class="ipts">
+    <div id="alertcolor" class="colorSelector">
+        <div style="background-color: {$_config['alertcolor']};">&nbsp;</div>
+    </div>
+    <input type="text" name="alertcolor" class="inputstyle iptw1" value="{$_config['alertcolor']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_titlebg}</div>
+    <div class="ipts">
+    <div id="titlebg" class="colorSelector">
+        <div style="background-color: {$_config['titlebg']};">&nbsp;</div>
+    </div>
+    <input type="text" name="titlebg" class="inputstyle iptw1" value="{$_config['titlebg']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_titlelabel}</div>
+    <div class="ipts">
+    <div id="titlelabel" class="colorSelector">
+        <div style="background-color: {$_config['titlelabel']};">&nbsp;</div>
+    </div>
+    <input type="text" name="titlelabel" class="inputstyle iptw1" value="{$_config['titlelabel']}" /></div>
+    <div class="clear"></div>
+</div>
+<div class="field">
+    <div class="label">{lang style_boxborder}</div>
+    <div class="ipts">
+    <div id="boxborder" class="colorSelector">
+        <div style="background-color: {$_config['boxborder']};">&nbsp;</div>
+    </div>
+    <input type="text" name="boxborder" class="inputstyle iptw1" value="{$_config['boxborder']}" /></div>
+    <div class="clear"></div>
+</div>
+</div>
+<script>
+function seltheme(t){
+    var colors = new Array()
+    colors['blue'] = {"bodybg":"#F4F4F4","link_color":"#1d64ad","link_hover_color":"#ffffff","header_bg":"#003366","header_h1":"#ffcc00","headerbottom":"#F4F4F4","settingtxt":"#ffffff","tablinkbg":"#1A4F85","tablink":"#ffffff","tablinkcurrent":"#009900","tablinkhover":"#ffffff","tablinkhoverbg":"#1D64AD","tablinkfrom":"#FEFEFE","tablinkto":"#F4F4F4","alertcolor":"#ffb2b2","titlebg":"#edf3fe","titlelabel":"#003366","boxborder":"#003366"};
+    colors['green'] =  {"bodybg":"#F4F4F4","link_color":"#437c56","link_hover_color":"#ffffff","header_bg":"#cbeac7","header_h1":"#000000","headerbottom":"#F4F4F4","settingtxt":"#666666","tablinkbg":"#437c56","tablink":"#ffffff","tablinkcurrent":"#000000","tablinkhover":"#d6ffda","tablinkhoverbg":"#1e5a28","tablinkfrom":"#FEFEFE","tablinkto":"#F4F4F4","alertcolor":"#ffb2b2","titlebg":"#eefef1","titlelabel":"#1e5a28","boxborder":"#1e5a28"};
+    colors['purple'] = {"bodybg":"#F4F4F4","link_color":"#ac205f","link_hover_color":"#ffffff","header_bg":"#ac205f","header_h1":"#98cbe9","headerbottom":"#F4F4F4","settingtxt":"#ffffff","tablinkbg":"#e44c90","tablink":"#ffffff","tablinkcurrent":"#ac205f","tablinkhover":"#ffffff","tablinkhoverbg":"#e96ea5","tablinkfrom":"#FEFEFE","tablinkto":"#F4F4F4","alertcolor":"#ffb2b2","titlebg":"#fae1ed","titlelabel":"#ac205f","boxborder":"#ac205f"};
+    colors['black'] = {"bodybg":"#F4F4F4","link_color":"#000000","link_hover_color":"#ffffff","header_bg":"#000000","header_h1":"#ffffff","headerbottom":"#F4F4F4","settingtxt":"#ffffff","tablinkbg":"#666666","tablink":"#ffffff","tablinkcurrent":"#000000","tablinkhover":"#000000","tablinkhoverbg":"#efefef","tablinkfrom":"#FEFEFE","tablinkto":"#F4F4F4","alertcolor":"#ffb2b2","titlebg":"#eeeeee","titlelabel":"#222222","boxborder":"#222222"};
+    colors['brown'] = {"bodybg":"#FCF8F7","link_color":"#A85401","link_hover_color":"#ffffff","header_bg":"#512909","header_h1":"#eeeeee","headerbottom":"#f18c00","settingtxt":"#ffffff","tablinkbg":"#64340f","tablink":"#ffffff","tablinkcurrent":"#F5F1E8","tablinkhover":"#ffffff","tablinkhoverbg":"#825837","tablinkfrom":"#825837","tablinkto":"#825837","alertcolor":"#ffb2b2","titlebg":"#F5F1E8","titlelabel":"#222222","boxborder":"#512909"};
+    for(i in colors[t]){
+        $('#theme_edit_form').find('input[name="'+i+'"]').val(colors[t][i]);
+        $('#theme_edit_form').find('#'+i+' div').css('backgroundColor', colors[t][i]);
+
+        $('#'+i).ColorPickerSetColor(colors[t][i]);
+    }
+}
+//先移除此页面中旧的colorpicker图层
+$('.colorpicker').remove();
+
+$('#theme_edit_form').find('div.colorSelector').each(function(i){
+    var color_picker_obj = $(this);
+    var color_picker_id = $(this).attr('id');
+    var form_field_obj = $('#theme_edit_form').find('input[name="'+color_picker_id+'"]');
+    var color_picker_color = form_field_obj.val();
+    $('#'+color_picker_id).ColorPicker({
+        color: color_picker_color,
+        onShow: function (colpkr) {
+            $(colpkr).fadeIn(500);
+            return false;
+        },
+        onHide: function (colpkr) {
+            $(colpkr).fadeOut(500);
+            return false;
+        },
+        onChange: function (hsb, hex, rgb) {
+            color_picker_obj.find('div').css('backgroundColor', '#' + hex);
+            form_field_obj.val('#' + hex);
+        }
+    });
+});
+</script> 

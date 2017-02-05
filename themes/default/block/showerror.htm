@@ -1,0 +1,14 @@
+{template block/mini_header}
+<div style="padding-top:60px;">
+<div id="center_box">
+    <div class="title title_c">{$error_msg} </div>
+    
+    <div class="admin_field mt15 gray">{lang you_can}  <!--{if !$loggedin}--><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=users act=login}')">{lang click_to_login}</a><!--{/if}--> <a href="{link ctl=default}">{lang back_to_index}</a></div>
+</div>
+</div>
+<style>
+.footer{
+    text-align:center;
+}
+</style>
+{template block/footer}

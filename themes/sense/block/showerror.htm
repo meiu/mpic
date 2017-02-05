@@ -1,0 +1,17 @@
+{template block/mini_header}
+<script>
+	$('body').addClass('show_info');
+</script>
+<div id="info_page">
+	<div class="center_box">
+		<div class="title png">{$error_msg}</div>
+		<div class="info_foot">
+			<!--{if !$loggedin}--><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=users act=login}')" class="login png">{lang click_to_login}</a><!--{/if}--> <a href="{link ctl=default}" class="home png">{lang back_to_index}</a></div>
+	</div>
+</div>
+<style>
+.footer{
+    display:none;
+}
+</style>
+{template block/footer}

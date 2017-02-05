@@ -1,0 +1,106 @@
+{template block/header}
+<div id="bodywrap">
+    <!--{if $_config['showlistbtns'] || $_config['showphotosearch']}-->
+    <div class="filter">
+        <!--{if $_config['showphotosearch']}-->
+        <div class="search f_right">
+            <form id="photo_search" action="{link ctl=photos act=search}" method="post">
+                <input type="hidden" name="searchtype" value="all" />                
+                <input type="text" name="sname" value="{$search['name']}" placeholder="{lang search_photos}" />
+                <button type="submit" name="submit"></button>
+            </form>
+        </div>
+        <!--{/if}-->
+        <!--{if $_config['showlistbtns']}-->
+        <div class="display_setting f_left">
+            {$photo_col_menu}
+        </div>
+        <!--{/if}-->
+    </div>
+    <!--{/if}-->
+    <!--{if $loggedin && $photos}-->
+    <div class="admin_bar">
+        <div class="f_left">
+            <label><input type="checkbox" value="1" onclick="Madmin.check_all('.selitem',this.checked)" />{lang sel_all}</label> <span class="i_trash_sp sprite"></span> <a href="javascript:void(0)" onclick="Madmin.checked_action('.selitem','{link ctl=photos act=confirm_delete_batch}');">{lang delete_selected}</a> <span class="i_move_sp sprite"></span> <a href="javascript:void(0)" onclick="Madmin.checked_action('.selitem','{link ctl=photos act=move_batch}');">{lang move_selected}</a>
+            {$photo_multi_opt}
+        </div>
+        <div class="f_right">
+            
+        </div>
+    </div>
+    <!--{/if}-->
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <!--{if $photos}-->
+                    <div class="innercol grid">
+                        <div class="gallary_wrap">
+                            <!--{loop $photos $k $v}-->
+                            <div class="gallary_item">
+                                <div class="item">
+                                    <div class="pic_box">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    {$v['img_thumb']}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        
+                                    </div>
+                                    <!--{if $loggedin}-->
+                                    <div class="pic_ctl">
+                                        <ul class="btns">
+                                            <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=photos act=confirm_delete id=$v['id']}',true);" title="{lang move_to_trash}"><span class="i_littletrash sprite"></span></a></li>
+                                            <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=photos act=modify id=$v['id']}',true);" title="{lang modify}"><span class="i_edit sprite"></span></a></li>
+                                            <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=update_cover pic_id=$v['id']}');" title="{lang set_cover}"><span class="i_cover sprite"></span></a></li>
+                                            <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=photos act=rotate id=$v['id']}',true);" title="{lang rotate_image}"><span class="i_rotate sprite"></span></a></li>
+                                            <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=photos act=move id=$v['id']}',true);" title="{lang move_photo}"><span class="i_moveto sprite"></span></a></li>
+                                            <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=photos act=reupload id=$v['id']}',true);" title="{lang reupload_photo}"><span class="i_reupload sprite"></span></a></li>
+                                            <!--{$v['photo_control_icons']}-->
+                                        </ul>
+                                    </div>
+                                    <!--{/if}-->
+                                </div>
+                                <div class="info">
+                                    <div class="title">
+                                    <!--{if $loggedin}--><input class="selitem" type="checkbox" name="sel_id[{$v['id']}]" value="1" /><span class="name"><a nid="{$v['id']}" title="{lang click_to_rename}" href="javascript:void(0)" onclick="Madmin.rename(this,'{link ctl=photos act=rename id=$v['id']}')">{$v['name']}</a></span>
+                                    <!--{else}-->
+                                    <span class="name"><a href="{link ctl=photos act=view id=$v['id']}">{$v['name']}</a></span>
+                                    <!--{/if}-->
+                                    </div>
+                                    <div class="info_col">
+                                        <p class="gray">{lang view_nums|`$v['hits']`} ,
+                                        {if $show_takentime && $v['taken_time']}
+                                        {lang in_taken_time}{echo date('Y-m-d',$v['taken_time'])}
+                                        {else}
+                                        {lang in_upload_time}{echo date('Y-m-d',$v['create_time'])}
+                                        {/if}</p>
+                                        <p><!--{if $v['comments_num']}--><a href="{link ctl=photos act=view id=$v['id']}#comments">{lang comments_num|`$v['comments_num']`}</a><!--{/if}--> <!--{if $v['is_cover']}--><span class="cover">{lang cover}</span><!--{/if}-->&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--{/loop}-->
+                            <div class="clear"></div>
+                        </div>
+                        <div class="paginator">
+                            {$pagestr}
+                        </div>
+                    </div>
+                    <!--{else}-->
+                        <div class="no_data_info">
+                            <div class="pic no_photo_search"></div>
+                            <div class="data_msg">
+                                <div>{lang no_photo_search_notice}</div >
+                                <div class="button"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    <!--{/if}-->
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+{template block/footer}

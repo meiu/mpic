@@ -1,0 +1,11 @@
+<!--{if !$loggedin}-->
+<a href="{link ctl=users act=login}" title="{lang login_title}" onclick="Mui.box.show(this.href,true);return false;">{lang login}</a>
+<!--{else}-->
+<a title="{lang profile_title}" href="{link ctl=users act=profile}">{$u_info['user_nicename']}</a>
+<span class="pipe">|</span>
+<a title="{lang upload_photo}" href="{link ctl=upload}">{lang upload_photo}</a>
+<span class="pipe">|</span>
+<a title="{lang sys_setting_title}" href="{link ctl=setting}">{lang sys_setting}</a>
+<span class="pipe">|</span>
+<a title="{lang logout_title}" href="{link ctl=users act=logout}" onclick="Mui.box.show(this.href);return false;">{lang logout}</a>
+<!--{/if}-->

@@ -1,0 +1,26 @@
+<?php
+$language['sel_exists_style'] = 'Select the style';
+$language['blue'] = 'blue';
+$language['green'] = 'green';
+$language['purple'] = 'purple';
+$language['black'] = 'black';
+$language['brown'] = 'brown';
+$language['style_bodybg'] = 'Page bg color';
+$language['style_link_color'] = 'Hyperlink color';
+$language['style_link_hover_color'] = 'Hyperlink hover color';
+$language['style_header_bg'] = 'Header bg color';
+$language['style_header_h1'] = 'Head headline color';
+$language['style_headerbottom'] = 'Head bottom edge';
+$language['style_settingtxt'] = 'User status bar color';
+$language['style_tablinkbg'] = 'Tab bg color';
+$language['style_tablink'] = 'Tab color';
+$language['style_tablinkcurrent'] = 'Current tab color';
+$language['style_tablinkhover'] = 'Tab hover color';
+$language['style_tablinkhoverbg'] = 'Tab hover bg color';
+$language['style_tablinkfrom'] = 'Tab gradient 1';
+$language['style_tablinkto'] = 'Tab gradient 2';
+$language['style_alertcolor'] = 'Warning colors';
+$language['style_titlebg'] = 'Title bg color';
+$language['style_titlelabel'] = 'Form Label color';
+$language['style_boxborder'] = 'Border Color';
+$language['not_aliable_color'] = 'Invalid color! ';

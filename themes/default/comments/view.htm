@@ -1,0 +1,19 @@
+<div class="cmt_item bdwt sub">
+    <div class="f_left cmt_fce">
+        <img src="{echo get_avatar($info)}" />
+    </div>
+    <div class="thde">
+        <span class="f_right">
+            {echo date('Y-m-d H:i:s',$info['post_time'])}
+        </span>
+        <div class="tt">
+            <span class="title_c">{$info['author']}</span> {lang reply} <span class="title_c">{$info['reply_author']}</span>
+        </div>
+        <div class="cnt">
+            {$info['content']}
+        </div>
+        <div class="ctlbtn">
+            <a href="javascript:void(0);" onclick="reply_comment(this,'{link ctl=comments act=reply id=$info['id']}');">{lang reply}</a> <!--{if $loggedin}--><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=comments act=confirm_delete id=$info['id']}',true)">{lang delete}</a> <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=comments act=block id=$info['id']}')">{lang block}</a><!--{/if}-->
+        </div>
+    </div>
+</div>

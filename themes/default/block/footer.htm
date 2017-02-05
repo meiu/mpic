@@ -1,0 +1,9 @@
+<div class="bottom">&nbsp;</div>
+<div class="footer">{$footer}
+    {if $show_process_info}
+    Processed in {echo timer_read('page');}ms
+    {/if}
+</div>
+{if isset($page_foot)}{$page_foot}{/if}
+</body>
+</html>

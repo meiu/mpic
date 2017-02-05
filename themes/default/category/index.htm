@@ -1,0 +1,36 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <div class="col titbg">
+                        <h1 class="f_left">{lang all_category}</h1>
+                        <h4 class="f_left"></h4>
+                        <div class="f_right mt5">
+                            {if $loggedin}<a href="{link ctl=category act=manage}">{lang category_manage}</a>{/if}
+                        </div>
+                    </div>
+                    <div class="innercol">
+                       <div class="innerconetent">
+                            <ul class="category_list">
+                            <!--{loop $categorylist $row}-->
+                            <li>
+                                <!--{for $i=1;$i<=$row['deep'];$i++}-->
+                                    <span class="treebg tree{$i}"></span>
+                                <!--{/for}-->
+                                <a href="{link ctl=albums act=index cate=$row['id']}">{$row['name']}</a> 
+                            </li>
+                            <!--{/loop}-->
+                            <li><a href="{link ctl=albums act=index cate=0}">{lang no_cate_album}</a></li>
+                            </ul>
+                       </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

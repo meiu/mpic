@@ -1,0 +1,159 @@
+{template block/header}
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <!--{if $albums}-->
+                    <div class="col titbg">
+                        <h1 class="f_left">{lang album_list}</h1>
+                        <h4 class="f_left">{lang total_ablum|$total_num}</h4>
+                        {$album_col_menu}
+                    </div>
+                    <div class="innercol grid">
+                        <div class="gallary_wrap">
+                            <!--{loop $albums $k $v}-->
+                            <div class="gallary_item album">
+                                <div class="item">
+                                    <div class="pic_box">
+                                        
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <!--{if !$loggedin && $v['priv_type']!=0}-->
+                                        <a href="{link ctl=photos aid=$v['id']}" onclick="Mui.box.show('{link ctl=photos act=auth_priv aid=$v['id']}',true);return false;">
+                                        <img src="{$base_path}statics/img/lock.gif" />
+                                        </a>
+                                        <!--{else}-->
+                                        <a href="{link ctl=photos aid=$v['id']}"><!--{if $v['cover_id']}--><img alt="{$v['name']}" src="{img $v['cover_path']}" /><!--{else}--><img src="{$base_path}statics/img/nophoto.gif" /><!--{/if}--></a>
+                                        <!--{/if}-->
+                                                    
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        
+                                    </div>
+                                    <div class="pic_ctl">
+                                        <ul class="btns">
+                                            <!--{if $loggedin}-->
+                                            <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=confirm_delete id=$v['id']}',true);" title="{lang move_to_trash}"><span class="i_littletrash sprite"></span></a></li>
+                                            <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=modify id=$v['id']}',true);" title="{lang modify}"><span class="i_edit sprite"></span></a></li>
+                                            <!--{/if}-->
+                                            <!--{$v['album_control_icons']}-->
+                                        </ul>
+                                    </div>
+                                    <div class="clear brief">
+                                        <span class="f_left"></span>
+                                        <span class="f_right gray">
+                                            {if $show_uptime}
+                                            {lang in_upload_time}{echo date('Y-m-d',$v['up_time'])}
+                                            {else}
+                                            {lang in_create_time}{echo date('Y-m-d',$v['create_time'])}
+                                            {/if}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <div class="title">
+                                    <!--{if $loggedin}-->
+                                    <input class="selitem" type="checkbox" name="sel_id[{$v['id']}]" value="1" /> <span class="name"><a nid="{$v['id']}" title="{lang click_to_rename}" href="javascript:void(0)" onclick="Madmin.rename(this,'{link ctl=albums act=rename id=$v['id']}')">{$v['name']}</a></span>
+                                    <!--{else}-->
+                                    <span class="name">{$v['name']}</span>
+                                    <!--{/if}-->
+                                    </div>
+                                    <div class="info_col">
+                                        <span class="f_left gray">{lang photos_num|`$v['photos_num']`}</span>
+                                        <span class="f_right gray"><span class="i_greenicn sprite"></span>{echo enum_priv_type($v['priv_type'])}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--{/loop}-->
+                        </div>
+                        <div class="bot_toolbar">
+                            <div class="f_left paginator">
+                                {$pagestr}
+                            </div>
+                            <div class="f_right">
+                                <!--{if $loggedin}-->
+                                <label><input type="checkbox" value="1" onclick="Madmin.check_all('.selitem',this.checked)" />{lang sel_all} <span class="i_trash_sp sprite"></span></label> <a href="javascript:void(0)" onclick="Madmin.checked_action('.selitem','{link ctl=albums act=confirm_delete_batch}');">{lang delete_selected}</a>
+                                <!--{$album_multi_opt}-->
+                                <!--{/if}-->
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <!--{else}-->
+                        <div class="no_data_info">
+                            <!--{if $is_search}-->
+                            <div class="pic no_album_search"></div>
+                            <div class="data_msg">
+                                <div>{lang no_album_search_notice}</div >
+                                <div class="button"><a href="{link ctl=albums}">{lang view_all_album}</a></div>
+                            </div>
+                            <div class="clear"></div>
+                            <!--{else}-->
+                            <div class="pic no_album"></div>
+                            <div class="data_msg">
+                                <!--{if $loggedin && $search['cate_id']!=''}-->
+                                <div>{lang no_cate_album_notice}</div >
+                                <div class="button"><div class="bigbutton"><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=create cate=$search['cate_id']}',true);"><span>{lang create_new_album}</span></a></div></div>
+                                <!--{elseif $loggedin && empty($search['cate_id'])}-->
+                                <div>{lang no_album_notice}</div >
+                                <div class="button"><div class="bigbutton"><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=create}',true);"><span>{lang create_new_album}</span></a></div></div>
+                                <!--{elseif !$loggedin && $search['cate_id']!=''}-->
+                                <div>{lang no_cate_album_notice_notlogin}</div>
+                                <div class="button"><a href="javascript:void(0);" onclick="Mui.box.show('{link ctl=users act=login}',true);">{lang create_after_login}</a></div>
+                                <!--{elseif !$loggedin && empty($search['cate_id'])}-->
+                                <div>{lang no_album_notice_notlogin}</div>
+                                <div class="button"><a href="javascript:void(0);" onclick="Mui.box.show('{link ctl=users act=login}',true);">{lang create_after_login}</a></div>
+                                <!--{/if}-->
+                            </div>
+                            <div class="clear"></div>
+                            <!--{/if}-->
+                        </div>
+                    <!--{/if}-->
+                </div>
+            </td>
+            <td class="right">
+                <div class="sidebar">
+                    <!--{if $loggedin}-->
+                    <div class="mb10">
+                        <!--{if $search['cate_id']!=''}-->
+                        <div class="bigbutton"><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=create cate=$search['cate_id']}',true);"><span>{lang create_new_album}</span></a></div>
+                        <!--{else}-->
+                        <div class="bigbutton"><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=create}',true);"><span>{lang create_new_album}</span></a></div>
+                        <!--{/if}-->
+                    </div>
+                    <!--{/if}-->
+                    <div class="sidesearch mb20">
+                        <h2>{lang search_albums}</h2>
+                            <form id="album_search" class="search" action="{link ctl=albums}" method="post">
+                                <input type="text" class="inputstyle iptw1" name="sname" value="{$search['name']}" />
+                                <input type="submit" name="submit" class="ylbtn1 ml5" value="{lang search}" />
+                            </form>
+                    </div>
+                    
+                    <div class="side_category">
+                        <h2>{lang side_category}</h2>
+                        <ul class="category_tree">
+                            <!--{loop $categorylist $row}-->
+                            <li id="cate-{$row['id']}" class="deep-{$row['deep']}" deep="{$row['deep']}" style="padding-left:{echo 15*$row['deep']}px;{if $row['deep']>0}display:none;{/if}">
+                                {if $row['last']}<strong class="nochild"></strong>{else}<span class="closed" onclick="toggle_tree(this)"></span>{/if}<a href="{link ctl=albums act=index cate=$row['id']}">{$row['name']}</a> 
+                            </li>
+                            <!--{/loop}-->
+                            <li><strong class="nochild"></strong><a href="{link ctl=albums act=index cate=0}">{lang no_cate_album}</a></li>
+                        </ul>
+                    </div>
+                    {$album_sidebar}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+$(function(){
+    drop_select('.listorder');
+    drop_select('.pset');
+});
+</script>
+{template block/footer}

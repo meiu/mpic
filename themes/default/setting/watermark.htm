@@ -1,0 +1,197 @@
+{template block/header}
+<script src="{$statics_path}js/ajaxfileupload.js" type="text/javascript"></script>
+<link href="{$statics_path}colorpicker/css/colorpicker.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{$statics_path}colorpicker/js/colorpicker.js"></script>
+<style>
+.colorSelector{
+    position:relative; float:left;width:27px;height:27px;overflow:hidden;display:block;
+}
+</style>
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody" id="setting_layout">
+                    {template setting/setting_menu}
+                    <div class="innercol">
+                            <div class="innerconetent">
+                                <form id="setting_wm_form" action="{link ctl=setting act=save_watermark}" method="post" onsubmit="return false;">
+                                    <div class="settingfield">
+                                        <div class="label">{lang watermark_type_label}</div>
+                                        <div class="descinfo">{lang watermark_type_tips}</div>
+                                        <div class="input">
+                                            <label><input type="radio" name="watermark_type" value="0" onclick="$('#img_wm').hide();$('#font_wm').hide();$('#wm_pos').hide();" {if $watermark['type']==0}checked="checked"{/if} /> {lang close}</label>
+                                            <label><input type="radio" name="watermark_type" value="1" onclick="$('#img_wm').show();$('#font_wm').hide();$('#wm_pos').show();" {if $watermark['type']==1}checked="checked"{/if} /> {lang enable_img_wm}</label>
+                                            <label><input type="radio" name="watermark_type" value="2" onclick="$('#img_wm').hide();$('#font_wm').show();$('#wm_pos').show();" {if $watermark['type']==2}checked="checked"{/if} /> {lang enable_font_wm}</label>
+                                        </div>
+                                    </div>
+                                    <div id="img_wm">
+                                    <div class="settingfield">
+                                        <div class="label">{lang water_mark_image_label}</div>
+                                        <div class="descinfo">{lang water_mark_image_tips}</div>
+                                        <div class="input">
+                                            <input type="text" class="settinginput iptw3" id="water_mark_image" name="watermark[water_mark_image]" value="{$watermark['water_mark_image']}" />
+                                            <a href="javascript:void(0)" onclick="upload_watermark()">{lang upload}</a>
+                                             {if $watermark['water_mark_image']}<a href="{img $watermark['water_mark_image']}" target="_blank">{lang view}</a>{/if}
+                                        </div>
+                                    </div>
+                                    </div>
+                                    
+                                    <div id="font_wm">
+                                    <div class="settingfield">
+                                        <div class="label">{lang water_mark_string_label}</div>
+                                        <div class="descinfo">{lang water_mark_string_tips}</div>
+                                        <div class="input">
+                                            <input type="text" name="watermark[water_mark_string]" class="settinginput iptw3" value="{$watermark['water_mark_string']}" />
+                                        </div>
+                                    </div>
+                                    <div class="settingfield">
+                                        <div class="label">{lang water_mark_font_label}</div>
+                                        <div class="descinfo">{lang water_mark_font_tips}</div>
+                                        <div class="input">
+                                            <select name="watermark[water_mark_font]">
+                                                {loop $fonts $v}
+                                                <option value="{$v}" {if $v==$watermark['water_mark_font']}selected="selected"{/if}>{$v}</option>
+                                                {/loop}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="settingfield">
+                                        <div class="label">{lang water_mark_fontsize_label}</div>
+                                        <div class="descinfo">{lang water_mark_fontsize_tips}</div>
+                                        <div class="input">
+                                            <input type="text" name="watermark[water_mark_fontsize]" class="settinginput iptw1" value="{$watermark['water_mark_fontsize']}" />
+                                        </div>
+                                    </div>
+                                    <div class="settingfield">
+                                        <div class="label">{lang water_mark_color_label}</div>
+                                        <div class="descinfo">{lang water_mark_color_tips}</div>
+                                        <div class="input">
+                                            <div id="water_mark_color" class="colorSelector">
+                                                <div style="background-color: {$watermark['water_mark_color']};">&nbsp;</div>
+                                            </div>
+                                            <input type="text" id="water_mark_color_input" name="watermark[water_mark_color]" class="settinginput iptw1" value="{$watermark['water_mark_color']}" />
+                                        </div>
+                                    </div>
+                                    <div class="settingfield">
+                                        <div class="label">{lang water_mark_angle_label}</div>
+                                        <div class="descinfo">{lang water_mark_angle_tips}</div>
+                                        <div class="input">
+                                            <input type="text" name="watermark[water_mark_angle]" class="settinginput iptw1" value="{$watermark['water_mark_angle']}" />
+                                        </div>
+                                    </div>
+                                    
+                                    </div>
+                                    
+                                    <div id="wm_pos">
+                                    <div class="settingfield">
+                                        <div class="label">{lang water_mark_opacity_label}</div>
+                                        <div class="descinfo">{lang water_mark_opacity_tips}</div>
+                                        <div class="input">
+                                            <input type="text" name="watermark[water_mark_opacity]" class="settinginput iptw1" value="{$watermark['water_mark_opacity']}" />
+                                        </div>
+                                    </div>
+                                    <div class="settingfield">
+                                        <div class="label">{lang water_mark_pos_label}</div>
+                                        <div class="descinfo">{lang water_mark_pos_label}</div>
+                                        <div class="input">
+                                        <table width="400">
+                                            <tr>
+                                                <td height="25"><label><input type="radio" name="watermark[water_mark_pos]" value="1" {if $watermark['water_mark_pos']==1} checked="checked"{/if} /> {lang pos_topleft}</label></td>
+                                                <td><label><input type="radio" name="watermark[water_mark_pos]" value="2" {if $watermark['water_mark_pos']==2} checked="checked"{/if} /> {lang pos_topcenter}</label></td>
+                                                <td><label><input type="radio" name="watermark[water_mark_pos]" value="3" {if $watermark['water_mark_pos']==3} checked="checked"{/if} /> {lang pos_topright}</label></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td height="25"><label><input type="radio" name="watermark[water_mark_pos]" value="4" {if $watermark['water_mark_pos']==4} checked="checked"{/if} /> {lang pos_centerleft}</label></td>
+                                                <td><label><input type="radio" name="watermark[water_mark_pos]" value="5" {if $watermark['water_mark_pos']==5} checked="checked"{/if} /> {lang pos_center}</label></td>
+                                                <td><label><input type="radio" name="watermark[water_mark_pos]" value="6" {if $watermark['water_mark_pos']==6} checked="checked"{/if} /> {lang pos_centerright}</label></td>
+                                            </tr>
+                                            <tr>
+                                                <td height="25"><label><input type="radio" name="watermark[water_mark_pos]" value="7" {if $watermark['water_mark_pos']==7} checked="checked"{/if} /> {lang pos_bottomleft}</label></td>
+                                                <td><label><input type="radio" name="watermark[water_mark_pos]" value="8" {if $watermark['water_mark_pos']==8} checked="checked"{/if} /> {lang pos_bottomcenter}</label></td>
+                                                <td><label><input type="radio" name="watermark[water_mark_pos]" value="9" {if $watermark['water_mark_pos']==9} checked="checked"{/if} /> {lang pos_bottomright}</label></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td height="25" colspan="3"><label><input type="radio" name="watermark[water_mark_pos]" value="0" {if $watermark['water_mark_pos']==0} checked="checked"{/if} /> {lang pos_random}</label></td>
+                                            </tr>
+                                        </table>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    
+                                    <script>
+                                    var i_type = $('input[name=watermark_type]:checked').val();
+                                    if(i_type == 0){
+                                        $('#img_wm').hide();$('#font_wm').hide();$('#wm_pos').hide();
+                                    }else if(i_type == 1){
+                                        $('#img_wm').show();$('#font_wm').hide();$('#wm_pos').show();
+                                    }else if(i_type == 2){
+                                        $('#img_wm').hide();$('#font_wm').show();$('#wm_pos').show();
+                                    }
+                                    </script>
+                                    <div class="ctl_button">
+                                        <input type="submit" name="submit" class="ylbtn" value="{lang save_setting}" onclick="Mui.form.sendPop('setting_wm_form')" />
+                                    </div>
+                                </form>
+                            </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+function upload_watermark(){
+    var newuploadwin = '<div class="box_title titbg"><div onclick="Mui.box.close()" class="closer sprite i_close"></div>{lang upload}</div><div class="box_container"><input id="fileToUpload" type="file" size="25" name="fileToUpload"> <button class="ylbtn1" id="buttonUpload" onclick="return ajaxFileUpload();">{lang upload}</button> <input class="ylbtn1" type="button" value="{lang cancel}" onclick="Mui.box.close();" /></div>';
+    Mui.box.setData(newuploadwin,true);
+}
+
+function ajaxFileUpload(){
+    $.ajaxFileUpload
+    (
+        {
+            url:'{link ctl=setting act=fileupload}',
+            secureuri:false,
+            fileElementId:'fileToUpload',
+            dataType: 'json',
+            data:{upaction:'watermark'},
+            success: function (data, status)
+            {
+                if(typeof(data.error) != 'undefined'){
+                    if(data.error != ''){
+                        alert(data.error);
+                    }else{
+                        $('#water_mark_image').val(data.msg);
+                        Mui.box.close();
+                    }
+                }
+            },
+            error: function (data, status, e){
+                alert(e);
+            }
+        }
+    )
+    
+    return false;
+    
+}
+
+$('#water_mark_color').ColorPicker({
+        color: "{$watermark['water_mark_color']}",
+        onShow: function (colpkr) {
+            $(colpkr).fadeIn(500);
+            return false;
+        },
+        onHide: function (colpkr) {
+            $(colpkr).fadeOut(500);
+            return false;
+        },
+        onChange: function (hsb, hex, rgb) {
+            $('#water_mark_color div').css('backgroundColor', '#' + hex);
+            $('#water_mark_color_input').val('#' + hex);
+        }
+    });
+</script>
+{template block/footer}

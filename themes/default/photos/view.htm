@@ -1,0 +1,260 @@
+{template block/header}
+<style type="text/css">
+  span.pre_cur{
+      cursor: url("{$style_path}images/pre.cur"), auto;
+  }
+  span.next_cur{
+      cursor: url("{$style_path}images/next.cur"), auto;
+  }
+</style>
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <div class="innercol grid">
+                        <div id="pic_block" class="tbmu">
+                            <div class="f_left">
+                              <ul id="photo_modify_icons">
+                              <li class="share"><!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+<a href="javascript:void(0)" class="jiathis jiathis_txt" target="_blank"><img src="http://v2.jiathis.com/code_mini/images/btn/v1/jiathis1.gif" border="0" /></a>
+</div>
+<!-- JiaThis Button END -->
+</li>
+                              <!--{if $loggedin}-->
+                              <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=photos act=confirm_delete id=$info['id']}',true);" title="{lang move_to_trash}"><span class="i_littletrash sprite"></span> {lang move_to_trash_short}</a></li>
+                              <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=update_cover pic_id=$info['id']}');" title="{lang set_cover}"><span class="i_cover sprite"></span> {lang set_cover}</a></li>
+                              <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=photos act=rotate id=$info['id']}',true);" title="{lang rotate_image}"><span class="i_rotate sprite"></span> {lang rotate_image_short}</a></li>
+                              <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=photos act=move id=$info['id']}',true);" title="{lang move_photo}"><span class="i_moveto sprite"></span> {lang move_photo_short}</a></li>
+                              <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=photos act=reupload id=$info['id']}',true);" title="{lang reupload_photo}"><span class="i_reupload sprite"></span> {lang reupload_photo_short}</a></li>
+                              {$photo_col_ctl}
+                              <!--{/if}-->
+                              </ul>
+                            </div>
+                            <div class="f_right">
+                                {if $picture['previous']}<a href="{link ctl=photos act=view id=$picture['previous']['id']}#pic_block" class="btnprev">{lang prev_photo}</a>{else}{lang prev_photo}{/if}
+                                 <span class="pipe">|</span>
+                                {if $picture['next']}<a href="{link ctl=photos act=view id=$picture['next']['id']}#pic_block" class="btnnext">{lang next_photo}</a>{else}{lang next_photo}{/if}
+                                <span class="gray">
+                                ({lang photo_nav_title|$current_photo|`$album_info['photos_num']`})
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div id="photo_body">
+                            {$photo_body_append}
+                            <span id="imgarea">
+                                <img class="photo" alt="{$info['name']}" src="{img $info['path']}" />
+                            </span>
+                        </div>
+                        <div id="photo_infos">
+                            
+                            <div class="photo_main">
+                                <h1>
+                                    <!--{if $loggedin}-->
+                                    <div class="inline_edit" title="{lang click_editable}" onclick="Madmin.inline_edit(this,'{link ctl=photos act=modify_name_inline id=$info['id']}')">{$info['name']} <span class="i_editinfo sprite"></span>
+                                    </div>
+                                    <!--{else}-->
+                                    <div class="inline">
+                                        {$info['name']}
+                                    </div>
+                                    <!--{/if}-->
+                                </h1>
+                                <div class="desc">
+                                    <!--{if $loggedin}-->
+                                    <div class="inline_edit" title="{lang click_editable}" onclick="Madmin.inline_edit(this,'{link ctl=photos act=modify_desc_inline id=$info['id']}')"><!--{if !$info['desc']}-->
+                                        {lang no_photo_desc}
+                                        <!--{else}-->
+                                        {$info['desc']}
+                                        <!--{/if}--> <span class="i_editinfo sprite"></span>
+                                    </div>
+                                    <!--{else}-->
+                                    <div class="inline">
+                                        {$info['desc']}
+                                    </div>
+                                    <!--{/if}-->
+                                </div>
+                                <div class="tags">
+                                    <!--{if $loggedin}-->
+                                    <div class="inline_edit" title="{lang click_editable}" onclick="Madmin.inline_edit(this,'{link ctl=photos act=modify_tags_inline id=$info['id']}')"> {lang tags}: <!--{if !$info['tags']}-->{lang no_photo_tags}<!--{else}-->{$info['tags']}<!--{/if}--> <span class="i_editinfo sprite"></span>
+                                    </div>
+                                    <!--{else}-->
+                                    <div class="inline">
+                                        <!--{if $info['tags']}-->
+                                            {lang tags}: <!--{loop $info['tags_list'] $v}-->
+                                            <a href="{link ctl=photos act=search tag=$v}">{$v}</a>
+                                            <!--{/loop}-->
+                                        <!--{/if}-->
+                                    </div>
+                                    <!--{/if}-->
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+<script type="text/javascript" src="{$style_path}photo.js"></script>
+<script type="text/javascript">
+    ImgContol.lang = {
+      next_photo:'{lang next_photo}',
+      prev_photo:'{lang prev_photo}'
+    };
+    ImgContol.ajax = '{link ctl=photos act=nav}';
+<!--{if $picture['previous']}-->
+    ImgContol.prev = "{link ctl=photos act=view id=$picture['previous']['id']}";
+<!--{/if}-->
+<!--{if $picture['next']}-->
+    ImgContol.next = "{link ctl=photos act=view id=$picture['next']['id']}";
+<!--{/if}-->
+    ImgContol.album_id = '{$info['album_id']}';
+    ImgContol.last_rank = parseInt('{$last_rank}');
+    ImgContol.current_rank = parseInt('{$current_rank}');
+    //调整图片，填入目标图片原始宽度，原始高度，最大宽度和最大高度
+    ImgContol.resize_img(parseInt('{$info['width']}'),parseInt('{$info['height']}'),750,750);
+    ImgContol.init();
+</script>
+                    {if $enable_comment}
+                        <div class="col titbg">
+                            <h1 class="f_left">{lang all_photo_comments}</h1>
+                            <h4 class="f_left">{lang t_comments_num|`$info['comments_num']`}</h4>
+                        </div>
+                        <div class="innetcol">
+                            <div class="comment_form">
+                                <form id="photo_comment_form" action="{link ctl=comments act=post}" method="post" onsubmit="return false;">
+                                    <input type="hidden" name="ref_id" value="{$ref_id}" />
+                                    <input type="hidden" name="type" value="{$comments_type}" />
+                                    {if $loggedin}
+                                    <div class="field">
+                                        {lang loginwith|<span class="title_c">`$u_info['user_nicename']`</span>}<a href="{link ctl=users act=logout}"  onclick="Mui.box.show(this.href);return false;">{lang logout}</a> ?
+                                        <input type="hidden" name="email" value="{if isset($u_extrainfo['email'])}{$u_extrainfo['email']}{/if}" />
+                                        <input type="hidden" name="author" value="{$u_info['user_nicename']}" />
+                                    </div>
+                                    {else}
+                                    <div class="field">
+                                        <div class="label">{lang email}</div>
+                                        <div class="ipts"><input type="text" class="inputstyle iptw2" name="email" /></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="label">{lang comment_user} *</div>
+                                        <div class="ipts"><input type="text" class="inputstyle iptw2" name="author" /></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                    {if $enable_comment_captcha}
+                                    <div class="field">
+                                        <div class="label">{lang captcha_code} *</div>
+                                        <div class="ipts"><input type="text" class="inputstyle iptw1" name="captcha" /> <img src="{link ctl=captcha}" align="absmiddle" class="captcha" title="{lang click_to_reload}" onclick="reload_captcha(this)" /></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                    {/if}
+                                    {/if}
+                                    <div class="field">
+                                        <div class="label">{lang comment_content} *</div>
+                                        <div class="ipts"><textarea class="inputstyle ipttextarea" name="content"></textarea></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="label"> &nbsp;</div>
+                                        <div class="ipts"><input type="submit" name="submit" class="ylbtn f_left" value="{lang post_comments}" onclick="Mui.box.callback=function(){ reload_comments('{link ctl=comments act=more ref_id=$ref_id type=$comments_type}');$('#photo_comment_form').get(0).reset(); };Mui.form.sendAuto('photo_comment_form');" /></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </form>
+                            </div>
+                            <a name="comments"></a>
+                            <div class="comment_list">
+                                {template comments/more}
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    {/if}
+                    
+                    </div>
+                </div>
+            </td>
+            <td class="right">
+                <div class="sidebar">
+                    <div class="pic_nav">
+                        <h2 class="titbg">{$album_info['name']} </h2>
+                        <div class="pic_nav_body">
+                        <ul>
+                          <li>
+                          <!--{if $picture['previous']}-->
+                          <a href="{link ctl=photos act=view id=$picture['previous']['id']}#pic_block">
+                              <span class="thumbnail_container">
+                                <img src="{img $picture['previous']['thumb']}" style="{php echo detect_thumb($picture['previous']['width'],$picture['previous']['height'],58)}" />
+                              </span>
+                            </a>
+                          <!--{else}-->
+                          <a href="javascript:void(0)" class="non">
+                              <span class="thumbnail_container">
+                                {lang this_first_photo}
+                              </span>
+                          </a>
+                          <!--{/if}-->
+                          </li>
+                          <li><a class="current" href="{link ctl=photos act=view id=$info['id']}#pic_block">
+                              <span class="thumbnail_container">
+                                <img src="{img $info['thumb']}" style="{php echo detect_thumb($info['width'],$info['height'],58)}" />
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                          <!--{if $picture['next']}-->
+                            <a href="{link ctl=photos act=view id=$picture['next']['id']}#pic_block">
+                              <span class="thumbnail_container">
+                                <img src="{img $picture['next']['thumb']}" style="{php echo detect_thumb($picture['next']['width'],$picture['next']['height'],58)}" />
+                              </span>
+                            </a>
+                          <!--{else}-->
+                            <a href="javascript:void(0)" class="non">
+                                <span class="thumbnail_container">
+                                  {lang this_last_photo}
+                                </span>
+                            </a>
+                          <!--{/if}-->
+                          </li>
+                        </ul>
+                        <div class="nav_ctl">
+                          <span class="nav_ctl_prev"><a href="javascript:void(0)" onclick="ImgContol.nav_prev()">{lang prev_photo}</a></span>
+                          <span class="slideshow"><span class="i_slideshow sprite"></span> <a href="{link ctl=photos act=slide aid=$info['album_id']}">{lang slideshow_view}</a></span>
+                          <span class="nav_ctl_next"><a href="javascript:void(0)" onclick="ImgContol.nav_next()">{lang next_photo}</a></span>
+                          <div class="clear"></div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- todo -->
+                    <div class="mb10 mt15 tinfo">
+                        <p>{lang in_upload_time}: {echo date('Y-m-d',$info['create_time'])}</p>
+                        <!--{if $info['taken_time']}-->
+                        <p>{lang in_taken_time}: {echo date('Y-m-d',$info['taken_time'])}</p>
+                        <!--{/if}-->
+                        <p>{lang image_size}: {$info['width']}×{$info['height']} <a href="{img $info['path']}" target="_blank">{lang view_orgi_photo}</a></p>
+                        <p>{lang viewed_nums|`$info['hits']`}</p>
+                        <!--{if $info['exif'] && isset($metas)}-->
+                        <p><a href="javascript:void(0)" onclick="show_exif(this)">{lang view_exif}</a></p>
+                        <div id="meta_detail" style="display:none;"> 
+                          <table>
+                          <!--{loop $metas $m}-->
+                          <tr><td>{$m['cname']}</td><td>{$m['value']}</td></tr>
+                          <!--{/loop}-->
+                          </table>
+                          <p class="t_right"><a href="{link ctl=photos act=meta id=$info['id']}">{lang more_exif}</a></p>
+                        </div>
+                        <!--{/if}-->
+                    </div>
+                    {$photo_view_sidebar}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- JiaThis JS BEGIN -->
+<script type="text/javascript" >
+var jiathis_config={
+  title:"{$sharetitle}",
+  pic:"{img $info['path']}",
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+<!-- JiaThis JS END -->
+{template block/footer}

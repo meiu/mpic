@@ -1,0 +1,145 @@
+{template block/header}
+<div id="bodywrap">
+    <!--{if $_config['showlistbtns'] || $_config['showalbumsearch']}-->
+	<div class="filter">
+        <!--{if $_config['showalbumsearch']}-->
+		<div class="search f_right ml10">
+			<form id="album_search" action="{link ctl=albums}" method="post">
+			    <input type="text" name="sname" value="{$search['name']}" placeholder="{lang search_albums}" />
+			    <button type="submit" name="submit"></button>
+			</form>
+		</div>
+        <!--{/if}-->
+        <!--{if $_config['showlistbtns']}-->
+		<div class="f_right">
+			<select id="par_id" name="par_id" onchange="window.location.href=this.value">
+                <option value="{link ctl=albums act=index cate=0}">{lang no_cate_album}</option>
+				<!--{loop $categorylist $row}-->
+					<option value="{link ctl=albums act=index cate=$row['id']}" {if $row['id']==$search['cate_id']}selected="selected"{/if}>{echo str_repeat('--',$row['deep'])}{$row['name']}</option>
+				<!--{/loop}-->
+            </select>
+		</div>
+		<div class="display_setting f_left">
+			{$album_col_menu}
+		</div>
+        <!--{/if}-->
+	</div>
+    <!--{/if}-->
+
+    <!--{if $loggedin && $albums}-->
+    <div class="admin_bar">
+        <div class="f_left">
+            <label><input type="checkbox" value="1" onclick="Madmin.check_all('.selitem',this.checked)" />{lang sel_all}</label> <span class="i_trash_sp sprite"></span><a href="javascript:void(0)" onclick="Madmin.checked_action('.selitem','{link ctl=albums act=confirm_delete_batch}');">{lang delete_selected}</a>
+            <!--{$album_multi_opt}-->
+        </div>
+        <div class="f_right">
+            <div class="bigbutton"><a href="javascript:void(0)" onclick="<!--{if $search['cate_id']!=''}-->Mui.box.show('{link ctl=albums act=create cate=$search['cate_id']}',true);<!--{else}-->Mui.box.show('{link ctl=albums act=create}',true);<!--{/if}-->"><span>{lang create_new_album}</span></a></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!--{/if}-->
+    {$album_sidebar}
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <!--{if $albums}-->
+                    <div class="innercol grid">
+                        <div class="gallary_wrap">
+                            <!--{loop $albums $k $v}-->
+                            <div class="gallary_item album">
+                                <div class="item">
+                                    <div class="pic_box">
+                                        
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <!--{if !$loggedin && $v['priv_type']!=0}-->
+                                        <a href="{link ctl=photos aid=$v['id']}" onclick="Mui.box.show('{link ctl=photos act=auth_priv aid=$v['id']}',true);return false;">
+                                        <img src="{$base_path}statics/img/lock.gif" />
+                                        </a>
+                                        <!--{else}-->
+                                        <a href="{link ctl=photos aid=$v['id']}"><!--{if $v['cover_id']}--><img alt="{$v['name']}" src="{img $v['cover_path']}" /><!--{else}--><img src="{$base_path}statics/img/nophoto.gif" /><!--{/if}--></a>
+                                        <!--{/if}-->
+                                                    
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        
+                                    </div>
+                                    <!--{if $loggedin}-->
+                                    <div class="pic_ctl">
+                                        <ul class="btns">
+                                            <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=confirm_delete id=$v['id']}',true);" title="{lang move_to_trash}"><span class="i_littletrash sprite"></span></a></li>
+                                            <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=modify id=$v['id']}',true);" title="{lang modify}"><span class="i_edit sprite"></span></a></li>
+                                            <!--{$v['album_control_icons']}-->
+                                        </ul>
+                                    </div>
+                                    <!--{/if}-->
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <div class="title">
+                                    <!--{if $loggedin}-->
+                                    <input class="selitem" type="checkbox" name="sel_id[{$v['id']}]" value="1" /> <span class="name"><a nid="{$v['id']}" title="{lang click_to_rename}" href="javascript:void(0)" onclick="Madmin.rename(this,'{link ctl=albums act=rename id=$v['id']}')">{$v['name']}</a></span>
+                                    <!--{else}-->
+                                    <span class="name"><a href="{link ctl=photos aid=$v['id']}">{$v['name']}</a></span>
+                                    <!--{/if}-->
+                                    </div>
+                                    <div class="info_col">
+                                        <p class="gray">{lang photos_num|`$v['photos_num']`}
+                                        , 
+                                        {if $show_uptime}
+                                            {lang in_upload_time}{echo date('Y-m-d',$v['up_time'])}
+                                            {else}
+                                            {lang in_create_time}{echo date('Y-m-d',$v['create_time'])}
+                                            {/if}
+                                        </p>
+										<p><!--{if $loggedin}--><span class="i_greenicn sprite"></span>{echo enum_priv_type($v['priv_type'])}<!--{/if}--> <!--{if $v['enable_comment'] && $v['comments_num']}--><a href="{link ctl=photos act=index aid=$v['id']}#comments" class="gray">{lang comments_num|`$v['comments_num']`}</a><!--{/if}-->&nbsp; </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--{/loop}-->
+                            <div class="clear"></div>
+                        </div>
+                        <div class="paginator">
+                            {$pagestr}
+                        </div>
+                    </div>
+                    <!--{else}-->
+                        <div class="no_data_info">
+                            <!--{if $is_search}-->
+                            <div class="pic no_album_search png"></div>
+                            <div class="data_msg">
+                                <div>{lang no_album_search_notice}</div >
+                                <div class="button"><a href="{link ctl=albums}">{lang view_all_album}</a></div>
+                            </div>
+                            <div class="clear"></div>
+                            <!--{else}-->
+                            <div class="pic no_album png"></div>
+                            <div class="data_msg">
+                                <!--{if $loggedin && $search['cate_id']!=''}-->
+                                <div>{lang no_cate_album_notice}</div >
+                                <div class="button"><div class="bigbutton"><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=create cate=$search['cate_id']}',true);"><span>{lang create_new_album}</span></a></div></div>
+                                <!--{elseif $loggedin && empty($search['cate_id'])}-->
+                                <div>{lang no_album_notice}</div >
+                                <div class="button"><div class="bigbutton"><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=albums act=create}',true);"><span>{lang create_new_album}</span></a></div></div>
+                                <!--{elseif !$loggedin && $search['cate_id']!=''}-->
+                                <div>{lang no_cate_album_notice_notlogin}</div>
+                                <div class="button"><a href="javascript:void(0);" onclick="Mui.box.show('{link ctl=users act=login}',true);">{lang create_after_login}</a></div>
+                                <!--{elseif !$loggedin && empty($search['cate_id'])}-->
+                                <div>{lang no_album_notice_notlogin}</div>
+                                <div class="button"><a href="javascript:void(0);" onclick="Mui.box.show('{link ctl=users act=login}',true);">{lang create_after_login}</a></div>
+                                <!--{/if}-->
+                            </div>
+                            <div class="clear"></div>
+                            <!--{/if}-->
+                        </div>
+                    <!--{/if}-->
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+{template block/footer}

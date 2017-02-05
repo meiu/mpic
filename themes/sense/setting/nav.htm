@@ -1,0 +1,54 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody" id="setting_layout">
+                    {template setting/setting_menu}
+                    <div class="innercol">
+                            <div class="innerconetent">
+                                <form name="navform" method="post" action="{link ctl=setting act=save_nav}" id="navform" onsubmit="return false;">
+                                <table class="datalist">
+                                <thead>
+                                <tr>
+                                    <th style="width:40px;"></th>
+                                    <th style="width:80px;">{lang nav_sort}</th>
+                                    <th style="width:210px;">{lang nav_name}</th>
+                                    <th>{lang nav_url}</th>
+                                    <th style="width:70px;">{lang type}</th>
+                                    <th style="width:60px;">{lang enable}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!--{loop $nav_list $v}-->
+                                <tr class="hover">
+                                    <td>
+                                    <!--{if $v['type']!=0}--><input type="checkbox" name="del[{$v['id']}]" value="1" class="checkbox" /><!--{/if}--></td>
+                                    <td><input type="text" class="inputstyle iptw0" name="sort[{$v['id']}]" value="{$v['sort']}" /></td>
+                                    <td><input type="text" class="inputstyle iptw1" name="name[{$v['id']}]" value="{$v['name']}" /></td>
+                                    <td><!--{if $v['type']!=0}--><input type="text" class="inputstyle iptw1" name="url[{$v['id']}]" value="{$v['url']}" /><!--{else}-->{link ctl=$v[url]}<!--{/if}--></td>
+                                    <td><!--{if $v['type']==0}-->{lang nav_inside}<!--{else}-->{lang nav_custom}<!--{/if}--></td>
+                                    <td><input type="checkbox" name="enable[{$v['id']}]" value="1" {if $v['enable']}checked="checked"{/if} /></td>
+                                </tr>
+                                <!--{/loop}-->
+                                <tr class="hover">
+                                    <td colspan="2"></td>
+                                    <td colspan="4"><span class="i_add sprite"></span> <a href="javascript:void(0)" onclick="Madmin.addEditNav($(this).parent().parent())">{lang add_menu}</a></td>
+                                </tr>
+                                <tr class="hover tablerow">
+                                    <td colspan="2"><input type="checkbox" name="delete" onclick="Madmin.check_all('.checkbox',this.checked)" value="1" /> {lang delete?} </td>
+                                    <td colspan="4"><input type="submit" value="{lang submit}" class="ylbtn" onclick="Mui.form.sendPop('navform')" /></td>
+                                </tr>
+                                </tbody>
+                                </table>
+                                </form>
+                            </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

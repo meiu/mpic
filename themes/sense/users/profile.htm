@@ -1,0 +1,68 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <div class="innercol">
+                       <div class="innerconetent" id="profile_box">
+                           <form id="user_profile" action="{link ctl=users act=save_profile}" method="post" onsubmit="return false;">
+                               <div class="field">
+                                      <div class="label">{lang loginname}</div>
+                                      <div class="ipts">{$u_info['user_name']}</div>
+                                      <div class="clear"></div>
+                               </div>
+                               <div class="field">
+                                   <div class="label">{lang nickname} *</div>
+                                   <div class="ipts"><input type="text" name="user_nicename" class="inputstyle iptw3" value="{$u_info['user_nicename']}" /></div>
+                                   <div class="clear"></div>
+                               </div>
+                               <div class="field">
+                                      <div class="label">{lang email}</div>
+                                      <div class="ipts"><input type="text" name="extra[email]" class="inputstyle iptw3" value="{if isset($u_extrainfo['email'])}{$u_extrainfo['email']}{/if}" /></div>
+                                      <div class="clear"></div>
+                                  </div>
+                               <div class="field">
+                                      <div class="label">{lang old_passport}</div>
+                                      <div class="ipts"><input type="password" name="old_pass" class="inputstyle iptw3" value="" /></div>
+                                      <div class="clear"></div>
+                               </div>
+                               <div class="field">
+                                     <div class="label">{lang new_passport}</div>
+                                     <div class="ipts"><input type="password" name="new_pass" class="inputstyle iptw3" value="" /></div>
+                                     <div class="clear"></div>
+                               </div>
+                                 <div class="field">
+                                      <div class="label">{lang confirm_newpass}</div>
+                                      <div class="ipts"><input type="password" name="new_pass_again" class="inputstyle iptw3" value="" /></div>
+                                      <div class="clear"></div>
+                                  </div>
+                                <div class="field">
+                                      <div class="label">{lang user_theme}</div>
+                                      <div class="ipts">
+                                        
+                                        <select name="extra[theme]">
+                                        <option value="">{lang not_set}</option>
+                                        <!--{loop $themes $k $v}-->
+                                            <option value="{$v['dir']}" {if isset($u_extrainfo['theme']) && $u_extrainfo['theme']==$v['dir']}selected="selected"{/if}>{$v['name']}</option>
+                                        <!--{/loop}-->
+                                        </select>
+                                      </div>
+                                      <div class="clear"></div>
+                                  </div>
+                                  <div class="field">
+                                      <div class="label"> &nbsp;</div>
+                                      <div class="ipts"><input type="submit" value="{lang save}" class="ylbtn f_left" name="submit" onclick="Mui.form.sendAuto('user_profile')"></div>
+                                      <div class="clear"></div>
+                                  </div>
+                           </form>
+                       </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

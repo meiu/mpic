@@ -1,0 +1,73 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody" id="setting_layout">
+                    {template setting/setting_menu}
+                    <div class="innercol">
+                            <div class="innerconetent">
+                                {if $safemode}
+                                <div class="meiu_notice_div"><div class="failed">{lang in_safe_mode}</div></div>
+                                {/if}
+                                
+                                {if $plugins}
+                                <div class="pluginlist">
+                                    <table class="datalist">
+                                        <thead>
+                                        <tr>
+                                            <th width="100">{lang plugin_id}</th>
+                                            <th width="150">{lang plugin_name}</th>
+                                            <th>{lang plugin_desc}</th>
+                                            <th width="50">{lang version}</th>
+                                            <th width="100">{lang developer}</th>
+                                            <th width="100">{lang status}</th>
+                                            <th width="100">{lang operate}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {loop $plugins $v}
+                                        <tr class="hover">
+                                            <td>{$v['plugin_id']}</td>
+                                            <td>{$v['plugin_name']}</td>
+                                            <td>{$v['description']}</td>
+                                            <td>{$v['local_ver']}</td>
+                                            <td><a href="{$v['author_url']}" target="_blank">{$v['author_name']}</a></td>
+                                            <td>{if $v['installed']}
+                                                {if $v['available']}
+                                                {lang enabled}
+                                                {else}{lang disabled}{/if}
+                                                {else}
+                                                {lang not_installed}
+                                                {/if} </td>
+                                            <td>{if $v['installed']}
+                                                    {if $v['available']}
+                                                    <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=setting act=plugin_disable plugin=$v['plugin_id']}')">{lang disable}</a>
+                                                    {else}
+                                                    <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=setting act=plugin_enable plugin=$v['plugin_id']}')">{lang enable}</a> <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=setting act=plugin_remove plugin=$v['plugin_id']}')">{lang delete}</a>
+                                                    {/if}
+                                                    
+                                                    {if $v['hasconfig']}
+                                                    <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=setting act=plugin_config plugin=$v['plugin_id']}',true)">{lang config}</a>
+                                                    {/if}
+                                                {else}
+                                                <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=setting act=plugin_install plugin=$v['plugin_id']}')">{lang install}</a>
+                                                {/if}</td>
+                                        </tr>
+                                        {/loop}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {else}
+                                {lang no_plugins}
+                                {/if}
+                            </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

@@ -1,0 +1,42 @@
+<div class="box_title titbg">
+    <div class="closer sprite i_close" onclick="Mui.box.close()"></div>
+    {lang rotate_image} - {$info['name']}
+</div>
+<div class="box_container">
+    <form id="photo_rotate" action="{link ctl=photos act=do_rotate id=$info['id']}" method="post" onsubmit="return false;">
+        <div align="center" class="field">
+				<input type="hidden" id="rot_value" name="rot" value="0" />
+				<table>
+					<tr>
+						<td  width="100"><a href="javascript:void(0);" onclick="rotate_left();"><img src="{$statics_path}img/turn_left.png" alt="{lang rotate_left_90}" title="{lang rotate_left_90}" /></a></td>
+						<td width="180" height="185"  style="vertical-align:middle;"><img id="rot_img" src="{img $info['thumb']}" /></td>
+						<td width="100"><a href="javascript:void(0);" onclick="rotate_right();"><img src="{$statics_path}img/turn_right.png" alt="{lang rotate_right_90}" title="{lang rotate_right_90}" /></a></td>
+					</tr>
+				</table>
+				
+				<script>
+					function rotate_left(){
+						var rot = $('#rot_img').rotate('ccw');
+						$('#rot_value').val(rot);
+					}
+					function rotate_right(){
+						var rot = $('#rot_img').rotate('cw');
+						$('#rot_value').val(rot);
+					}
+				</script>
+            </table>
+        </div>
+        <div class="field">
+			<div class="label"> &nbsp;</div>
+            <div class="ipts"><input type="submit" value="{lang confirm}" class="ylbtn f_left" name="submit" onclick="Mui.form.sendPop('photo_rotate');loading_bar();"> <input type="button" value="{lang cancel}" class="ml10 graybtn f_left" name="cancel" onclick="Mui.box.close()"></div>
+            <div class="clear"></div>
+        </div>
+    </form>
+</div>
+<script>
+    function loading_bar(){
+        $('#meiu_float_box div.box_container').hide();
+        $('#meiu_float_box').append('<div class="loading">Loading...</div>');
+        Mui.centerMe('#meiu_float_box');
+    }
+</script>

@@ -1,0 +1,11 @@
+<div class="dropmenu pset f_right">
+	<span class="label">{lang show_nums_per_page}</span>
+	<div class="selectlist">
+		<div class="selected"></div>
+		<ul class="optlist">
+			{loop $pageset_menu $v}
+				<li {if $pageset_menu_current==$v}class="current"{/if}><a href="javascript:void(0);" onclick="page_setting('{$pageset_menu_type}',{$v});"><span>{$v}</span></a></li>
+			{/loop}
+		</ul>
+	</div>
+</div>

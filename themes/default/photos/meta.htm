@@ -1,0 +1,41 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <div class="col titbg">
+                        <h1 class="f_left">{lang view_more_meta|`$info['name']`}</h1>
+                        <h4 class="f_left"></h4>
+                        <div class="rmenu f_right">
+                           
+                        </div>
+                    </div>
+                    <div class="innercol grid">
+                        <div class="meta_thumb">
+                            <p><a href="{link ctl=photos act=view id=$info['id']}"><img src="{img $info['thumb']}" /></a></p>
+                            <p class="datetime">{lang in_upload_time}: {echo date('Y-m-d',$info['create_time'])}</p>
+                            <p class="datetime">{lang in_taken_time}: {echo date('Y-m-d',$info['taken_time'])}</p>
+                        </div>
+                        <div class="meta_data">
+                            <table>
+                                {loop $metas $v}
+                                <tr>
+                                    <td width="200">{$v['cname']}</td>
+                                    <td>{$v['value']}</td>
+                                </tr>
+                               {/loop}
+                            </table>
+                            <div class="lht2"><a href="{link ctl=photos act=view id=$info['id']}">{lang go_back}</a></div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

@@ -1,0 +1,12 @@
+<div id="nav">
+    <ul class="png">
+    <!--{php $total_crumb=count($crumb_nav)}-->
+    <!--{loop $crumb_nav $k $v}-->
+        <!--{if $k+1==$total_crumb}-->
+        <li class="png last"><span>{$v['name']}</span></li>
+        <!--{else}-->
+        <li class="png"><a href="{$v['link']}">{$v['name']}</a></li>
+        <!--{/if}-->
+    <!--{/loop}-->
+    </ul>
+</div>

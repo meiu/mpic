@@ -1,0 +1,27 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <div class="col titbg">
+                        <h1 class="f_left">{lang upload_photo}</h1>
+                        <h4 class="f_left"></h4>
+                        <div class="rmenu f_right">
+                           {lang switch_upload_type}: <a href="{link ctl=upload act=multi aid=$album_id}">{lang expert_mode}</a> | <a href="{link ctl=upload act=normal aid=$album_id}">{lang normal_mode}</a> | <a href="{link ctl=upload act=import aid=$album_id}" class="current">{lang import_mode}</a>
+                        </div>
+                    </div>
+                    <div class="innercol grid">
+                        <div id="upload_field">
+                           <div class="meiu_notice_div">{$result_msg}</div>
+						   <div align="left" style="padding-left:50px"><input type="submit" name="uploadbtn" class="ylbtn" value="{lang confirm}" onclick="window.location.href='{link ctl=albums}'" /></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

@@ -1,0 +1,95 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <div class="tab f_left mb10 wide">
+                       <ul>
+                           <li class="current"><a href="{link ctl=upload act=multi aid=$album_id}">{lang expert_mode}</a></li>
+                           <li><a href="{link ctl=upload act=normal aid=$album_id}" class="current">{lang normal_mode}</a></li>
+						   <li><a href="{link ctl=upload act=import aid=$album_id}">{lang import_mode}</a></li>
+                       </ul>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="innercol grid">
+<script type="text/javascript" src="{$statics_path}js/plupload.min.js"></script>
+<script type="text/javascript" src="{$statics_path}js/jquery.plupload.queue.min.js"></script>
+<script>
+$(function() {
+    plupload.addI18n({
+        'Filename' : '{lang filename}',
+        'Status' : '{lang status}',
+        'Size' : '{lang size}',
+        'Add files' : '{lang add_file}',
+        'Stop current upload' : '{lang stop_upload}',
+        'Start uploading queue' : '{lang start_upload}',
+        'Start upload' : '{lang start_upload}',
+        'Uploaded %d/%d files':'{lang upload_status}',
+        'Drag files here.' : '{lang drag_file_here}'
+    });
+
+   $("#muilti_uploader").pluploadQueue({
+        runtimes : 'html5,flash',
+        url : '{link ctl=upload act=process aid=$album_id}',
+        max_file_size : '15mb',
+        chunk_size : '512kb',
+        unique_names : false,
+        filters : [
+            {title : "Image files", extensions : "{$support_type}"}
+        ],
+        flash_swf_url : '{$statics_path}swf/plupload.flash.swf'
+        {if $upload_setting['enable_pre_resize']},
+        resize : {width : {$upload_setting['resize_width']}, height : {$upload_setting['resize_height']}, quality : {$upload_setting['resize_quality']}}
+        {/if}
+    });
+    var uploader = $('#muilti_uploader').pluploadQueue();
+    var usubmited = 0;
+    if(uploader){
+        uploader.bind('UploadProgress', function() {
+            if (uploader.total.uploaded == uploader.files.length && usubmited == 0){
+                usubmited = 1;
+                Mui.box.setData('<div class="loading">Loading...</div>');
+                Mui.form.sendPop('upload_photos_form');
+                setTimeout(function(){
+                    $('#upload_photos_form').submit();
+                },200);
+            }
+        });
+        $('#upload_photos_form').find('input[name="uploadbtn"]').click(function(e) {
+            if (uploader.total.uploaded == 0) {
+                if (uploader.files.length > 0) {
+                    uploader.start();
+                } else {
+                    Mui.box.alert('{lang notice_title}','{lang must_upload_one}','{lang confirm}');
+                }
+            }
+        });
+    }
+});
+</script>
+<link rel="stylesheet" href="{$statics_path}plupload/plupload.queue.css" type="text/css" />
+                        <div id="upload_field">
+                            <form id="upload_photos_form" method="post" action="{link ctl=upload act=save t=multi aid=$album_id}" onsubmit="return false;">
+                                <div class="field">
+                                    <div class="label">{lang you_chose_album}:</div>
+                                    <div class="ipts"><strong>{$album_info['name']}</strong> <a href="{link ctl=upload act=index aid=$album_id t=multi}" class="ml10">{lang back_to_re_select}</a></div>
+                                    <div class="clear"></div>
+                                </div>
+                                <div id="muilti_uploader">
+                                    <div class="notice_info">
+                                    {lang loading} <a href="{link ctl=upload act=normal aid=$album_id}">{lang if_no_response_click_here}</a>
+                                    </div>
+                                </div>
+                                <div align="center"><input type="button" name="uploadbtn" class="ylbtn" value="{lang upload_immediatly}" /></div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+{template block/footer}

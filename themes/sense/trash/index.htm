@@ -1,0 +1,91 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    
+                    <!--{if !$isempty}-->
+                    <div class="mb10">
+                        <div class="tab f_left wide">
+                             <ul>
+                                 <li {if $type==1}class="current"{/if}><a href="{link ctl=trash type=1}"><span>{lang album}({$deleted_albums})</span></a></li>
+                                 <li {if $type==2}class="current"{/if}><a href="{link ctl=trash type=2}"><span>{lang photo}({$deleted_photos})</span></a></li>
+                             </ul>
+                        </div>
+                        <div class="rmenu f_right">
+                                <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=trash act=confirm_emptying}',true)">{lang clear_recycle}</a>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="admin_bar">
+                        <div class="f_left">
+                            <label><input type="checkbox" value="1" onclick="Madmin.check_all('.selitem',this.checked)" />{lang sel_all} </label> <span class="i_delete_sp sprite"></span> <a href="javascript:void(0)" onclick="Madmin.checked_action('.selitem','{link ctl=trash act=confirm_delete_batch type=$type}');">{lang real_delete_selected}</a> <span class="i_store_sp sprite"></span> <a href="javascript:void(0)" onclick="Madmin.checked_action('.selitem','{link ctl=trash act=confirm_restore_batch type=$type}');">{lang restore_selected}</a>
+                        </div>
+                   </div>
+                    <!--{/if}-->
+                    <div class="innercol grid">
+                       <div class="innerconetent">
+                           <!--{if $isempty}-->
+                            <div style="padding:20px">{lang trash_is_empty}</div>
+                           <!--{else}-->
+                           <div class="gallary_wrap">
+                               <!--{if $data}-->
+                               <!--{loop $data $k $v}-->
+                               <div class="gallary_item {if $type==1}album{/if}">
+                                   <div class="item">
+                                       <div class="pic_box">
+                                           <table>
+                                               <tr>
+                                                   <td>
+                                                       {if $type==1}
+                                                       <!--{if $v['cover_id']}--><img src="{img $v['cover_path']}" /><!--{else}--><img src="{$base_path}statics/img/nophoto.gif" /><!--{/if}-->
+                                                        {else}
+                                                         <img src="{img $v['thumb']}" />
+                                                        {/if}
+                                                   </td>
+                                               </tr>
+                                           </table>
+                                       </div>
+                                       <div class="pic_ctl">
+                                           <ul class="btns">
+                                               <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=trash act=confirm_delete type=$type id=$v['id']}',true);" title="{lang real_delete}"><span class="i_delete sprite"></span></a></li>
+                                               <li><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=trash act=restore type=$type id=$v['id']}');" title="{lang restore}"><span class="i_restore sprite"></span></a></li>
+                                           </ul>
+                                       </div>
+                                       
+                                   </div>
+                                   <div class="info">
+                                       <div class="title">
+                                       <input class="selitem" type="checkbox" name="sel_id[{$v['id']}]" value="1" /> 
+                                       <span class="name">{$v['name']}</span>
+                                       </div>
+                                       <div class="info_col gray">
+                                           {if $type==1}
+                                           {lang photos_num|`$v['photos_num']`} ,
+                                           {/if}
+                                           {lang in_create_time}{echo date('Y-m-d',$v['create_time'])}</span>
+                                       </div>
+                                   </div>
+                               </div>
+                               <!--{/loop}-->
+                               <!--{elseif $type==1}-->
+                               <div style="padding:20px">{lang no_album_in_trash}</div>
+                               <!--{elseif $type==2}-->
+                               <div style="padding:20px">{lang no_photo_in_trash}</div>
+                               <!--{/if}-->
+                           </div>
+                       </div>
+                       <div class="paginator">
+                            {$pagestr}
+                       </div>
+                       <!--{/if}-->
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

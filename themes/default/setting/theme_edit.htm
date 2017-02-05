@@ -1,0 +1,14 @@
+<div class="box_title titbg">
+    <div class="closer sprite i_close" onclick="Mui.box.close()"></div>
+    {lang edit_style}
+</div>
+<div class="box_container">
+    <form id="theme_edit_form" action="{link ctl=setting act=theme_save_setting theme=$theme}" method="post" onsubmit="return false;">
+        {$setting_config}
+        <div class="field">
+            <div class="label"> &nbsp;</div>
+            <div class="ipts"><input type="submit" value="{lang save_setting}" class="ylbtn f_left" name="submit" onclick="Mui.form.sendAuto('theme_edit_form')"> <input type="button" value="{lang cancel}" class="ml10 graybtn f_left" name="cancel" onclick="Mui.box.close()"></div>
+            <div class="clear"></div>
+        </div>
+    </form>
+</div>

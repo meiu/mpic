@@ -1,0 +1,32 @@
+<div class="box_title titbg">
+    <div class="closer sprite i_close" onclick="Mui.box.close()"></div>
+    {lang reupload_photo} - {$info['name']}
+</div>
+<div class="box_container">
+    <iframe name="reupload_frame" style="border:0;width:0;height:0;" />
+    <form id="photo_reupload" action="{link ctl=upload act=reupload id=$info['id']}" method="post" target="reupload_frame" enctype="multipart/form-data">
+        <div class="field">
+            <div class="label">{lang new_photo}</div>
+            <div class="ipts">
+                <input type="file" name="upfile" />
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="field">
+            <div class="label"> &nbsp;</div>
+            <div class="ipts"><input type="submit" value="{lang confirm}" class="ylbtn f_left" name="submit" onclick="loading_bar()"> <input type="button" value="{lang cancel}" class="ml10 graybtn f_left" name="cancel" onclick="Mui.box.close()"></div>
+            <div class="clear"></div>
+        </div>
+    </form>
+</div>
+<script>
+    function loading_bar(){
+        $('#meiu_float_box div.box_container').hide();
+        $('#meiu_float_box').append('<div class="loading">Loading...</div>');
+        Mui.centerMe('#meiu_float_box');
+    }
+    function hide_loading_bar(){
+        $("#meiu_float_box").find(".loading").hide();
+        $("#meiu_float_box").find(".box_container").show();
+    }
+</script>

@@ -1,0 +1,20 @@
+<div class="box_title titbg">
+    <div class="closer sprite i_close" onclick="Mui.box.close()"></div>
+    {$title}
+</div>
+<div class="box_container">
+{$content}
+</div>
+<!--{if $close_time > 0}-->
+<script defer="defer">
+<!--{if $forward==''}-->
+    setTimeout(function (){
+        Mui.box.close()
+    },{echo $close_time*1000});
+<!--{else}-->
+    setTimeout(function (){
+        window.location.href = '{echo addslashes($forward)}'
+    },{echo $close_time*1000});
+<!--{/if}-->
+</script>
+<!--{/if}-->

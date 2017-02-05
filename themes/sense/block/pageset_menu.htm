@@ -1,0 +1,5 @@
+<ul class="tab pset f_left">
+	{loop $pageset_menu $v}
+		<li {if $pageset_menu_current==$v}class="current"{/if}><a href="javascript:void(0);" onclick="page_setting('{$pageset_menu_type}',{$v});"><span>{$v}</span></a></li>
+	{/loop}
+</ul>

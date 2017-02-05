@@ -1,0 +1,9 @@
+<form action="{link ctl=photos act=save_tags id=$info['id']}" method="post" onsubmit="return false;">
+    <div class="mb10">
+        <input type="text" class="inputstyle iptw4" name="tags" value="{$info['tags']}" /> <span class="gray ml10">{lang tags_tips}</span>
+    </div>
+    <div class="mb10">
+    
+    <input type="submit" name="submit" class="ylbtn1" value="{lang save}" /> <input type="button" name="cancel" class="graysmlbtn" value="{lang cancel}" />
+    </div>
+</form>

@@ -1,0 +1,69 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody" id="setting_layout">
+                    {template setting/setting_menu}
+                    <div class="innercol">
+                            <div class="innerconetent">
+                                <div class="sysinfo">
+                                 <div class="btns">{lang cache_size} <span id="cache_size">?</span> &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="get_cache_size()">{lang get_cache_size}</a> <input class="ml10 ylbtn" type="button" onclick="Mui.box.show('{link ctl=setting act=clear_cache}')" value="{lang clear_all_cache}" /> <input class="ml10 ylbtn" type="button" onclick="Mui.box.show('{link ctl=setting act=check_update}',true)" value="{lang check_update}" /></div>
+                                 
+                                 <form id="recounter" action="{link ctl=setting act=counter}" method="post" onsubmit="return false;">
+                                     <div class="section">{lang recounter}</div>
+                                     <table class="info">
+                                         <tr>
+                                             <td>
+                                                <label><input type="checkbox" value="1" name="counter[comments]" /> {lang comment_recounter} </label>
+                                                <label><input type="checkbox" value="1" name="counter[photos]" /> {lang photo_recounter}</label>
+                                                <label><input type="checkbox" value="1" name="counter[tags]" /> {lang tag_recounter}</label>
+                                             </td>
+                                         </tr>
+                                         <tr>
+                                              <td>
+                                                <input type="submit" class="ylbtn" onclick="Mui.form.sendPop('recounter')" value="{lang confirm}" />
+                                              </td>
+                                         </tr>
+                                     </table>
+                                 </form>
+
+                                 <div class="section">{lang thank_list}</div>
+                                 <table class="info">
+                                     <tr>
+                                        <td>
+                                            <h4>感谢以下用户的支持:</h4> 
+                                            <br>EFUN XIANG、吴海啸、刘杨兵、李凯旋、兄弟工作室、颜秉谦、陈子彬、蔡明珠、郭小林、余康正、Worldfar、肖旺煦、李鹏<br>
+                                            <br>
+                                            {lang donatenow}
+                                        </td>
+                                     </tr>
+                                 </table>
+
+                                 <div class="section">{lang system_info}</div>
+                                 <table class="info">
+                                     {loop $info $v}
+                                     <tr>
+                                         <th>{$v['title']}</th><td>{$v['value']} </td>
+                                     </tr>
+                                     {/loop}
+                                 </table> 
+                                 <div class="moreinfo">{lang more_system_info} <a href="{link ctl=setting act=phpinfo}" target="_blank">phpinfo()</a></div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+function get_cache_size(){
+	$('#cache_size').text('...');
+	$.post('{link ctl=setting act=get_cache_size}',{},function(data){
+		$('#cache_size').text(data);
+	});
+}
+</script>
+{template block/footer}

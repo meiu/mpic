@@ -1,0 +1,58 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <div class="tab f_left mb10 wide">
+                       <ul>
+                           <li><a href="{link ctl=upload act=multi aid=$album_id}">{lang expert_mode}</a></li>
+                           <li class="current"><a href="{link ctl=upload act=normal aid=$album_id}" class="current">{lang normal_mode}</a></li>
+						   <li><a href="{link ctl=upload act=import aid=$album_id}">{lang import_mode}</a></li>
+                       </ul>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="innercol grid">
+                        <div id="upload_field">
+                            {if isset($msginfo) && $msginfo}
+                                <div class="meiu_notice_div">{$msginfo}</div>
+                            {/if}
+                            
+                            <form id="upload_photos_form" method="post" enctype="multipart/form-data" action="{link ctl=upload act=save t=normal aid=$album_id}">
+                                <div class="field">
+                                    <div class="label">{lang you_chose_album}:</div>
+                                    <div class="ipts"><strong>{$album_info['name']}</strong> <a href="{link ctl=upload act=index aid=$album_id t=normal}" class="ml10">{lang back_to_re_select}</a></div>
+                                    <div class="clear"></div>
+                                </div>
+                                <div id="normal_uploader">
+                                    <ol>
+                                        <li>
+                                            <input type="file" name="imgs[]" />
+                                        </li>
+                                        <li>
+                                            <input type="file" name="imgs[]" />
+                                        </li>
+                                        <li>
+                                            <input type="file" name="imgs[]" />
+                                        </li>
+                                        <li>
+                                            <input type="file" name="imgs[]" />
+                                        </li>
+                                        <li>
+                                            <input type="file" name="imgs[]" />
+                                        </li>
+                                    </ol>
+                                </div>
+                                <div align="left" style="padding-left:50px"><input type="submit" name="uploadbtn" class="ylbtn" value="{lang upload_immediatly}" /></div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

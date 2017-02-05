@@ -1,0 +1,11 @@
+<div class="dropmenu f_right listorder">
+     <span class="label">{lang sort_by}:</span>
+	 <div class="selectlist">
+		<div class="selected"></div>
+		<ul class="optlist">
+			{loop $sort_menu $v}
+			<li {if $v['is_current']}class="current"{/if}><a href="javascript:void(0);" onclick="sort_setting('{$sort_menu_type}','{$v['field']}_{$v['t_sort']}');" class="list_{$v['c_sort']}{if $v['is_current']}_on{/if}"><span>{$v['name']}</span></a></li>
+			{/loop}
+		</ul>
+	</div>
+</div>

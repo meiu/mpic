@@ -1,0 +1,38 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <div class="tab f_left mb10 wide">
+                       <ul>
+                           <li {if !$tag_type}class="current"{/if}><a href="{link ctl=tags}">{lang all}</a></li>
+                           <li {if $tag_type==1}class="current"{/if}><a href="{link ctl=tags type=1}">{lang album}</a></li>
+                           <li {if $tag_type==2}class="current"{/if}><a href="{link ctl=tags type=2}">{lang photo}</a></li>
+                       </ul>
+                   </div>
+                    <div class="clear"></div>
+                    <div class="innercol">
+                       <div class="innerconetent">
+                           <ul class="taglist">
+                               {if $tag_list}
+                               {loop $tag_list $v}
+                               <li><a href="{if $v['type']==1}{link ctl=albums act=index tag=$v['name']}{else}{link ctl=photos act=search tag=$v['name']}{/if}">{$v['name']}</a></li>
+                               {/loop}
+                               {else}
+                                <div style="padding:20px">{lang no_tags}</div>
+                               {/if}
+                           </ul>
+                       </div>
+                       <div class="paginator">
+                          {$pagestr}
+                       </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

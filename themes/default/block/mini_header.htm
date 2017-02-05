@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--{if isset($meu_head)}-->
+<!--{$meu_head}-->
+<!--{/if}-->
+<link rel="shortcut icon" href="{$base_path}favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="{$statics_path}img/main.css" />
+<link rel="stylesheet" type="text/css" href="{$style_path}images/style.css" />
+<!--[if IE]><link rel="stylesheet" type="text/css" href="{$style_path}images/ie.css" /><![endif]-->
+<!--[if IE 6]>
+<script type="text/javascript" src="{$statics_path}js/DD_belatedPNG.js"></script>
+<script type="text/javascript">
+	DD_belatedPNG.fix('.sprite,.png');
+</script>
+<![endif]-->
+<script src="{$statics_path}js/jquery.js" type="text/javascript"></script>
+<script src="{$statics_path}js/common.js" type="text/javascript"></script>
+<!--{if isset($loggedin) && $loggedin}-->
+<script src="{$statics_path}js/admin.js" type="text/javascript"></script>
+<!--{/if}-->
+<style type="text/css">
+body{
+    background:{$_config['bodybg']};
+}
+#tabs div.clear{
+    background:{$_config['headerbottom']};
+}
+#tabs li a.current{
+    background:-moz-linear-gradient(center top , {$_config['tablinkfrom']},{$_config['tablinkto']});
+    background:-webkit-gradient(linear,0% 0%, 0% 100%, from({$_config['tablinkfrom']}), to({$_config['tablinkto']}));
+}
+a:link, a:visited {
+    color: {$_config['link_color']};
+ }
+a:hover,#settings_person a:hover {
+    color: {$_config['link_hover_color']};
+    background-color: {$_config['link_color']};
+}
+
+#header{ background-color:{$_config['header_bg']};}
+#header h1{ color:{$_config['header_h1']}; }
+#settings_person,#settings_person a{
+    color:{$_config['settingtxt']};
+}
+#tabs a:link, #tabs a:visited {
+    background-color:{$_config['tablinkbg']};
+    color:{$_config['tablink']};
+}
+#tabs ul a.current:link,#tabs ul a.current:visited {
+   color: {$_config['tablinkcurrent']};
+}
+
+#tabs a:hover {
+   color: {$_config['tablinkhover']};
+   background-color: {$_config['tablinkhoverbg']};
+}
+.alertcolor{
+    color:{$_config['alertcolor']};
+}
+.titbg{
+    background:{$_config['titlebg']};
+}
+
+.sidebar .editform .label,.title_c{
+    color:{$_config['titlelabel']};
+}
+#meiu_float_box{
+    border:3px solid {$_config['boxborder']};
+}
+</style>
+<!--[if IE]>
+<style>
+#tabs li a.current{
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr={$_config['tablinkfrom']}, endColorstr={$_config['tablinkto']});
+}
+</style>
+<![endif]-->
+</head>
+
+<body>

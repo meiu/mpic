@@ -1,0 +1,80 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody" id="setting_layout">
+                    {template setting/setting_menu}
+                    <div class="innercol">
+                       <div class="innerconetent">
+                              <ul class="tab f_left wide">
+                                <li class="all {if $status=='all'} current{/if}"><a href="{link ctl=comments act=manage}">{lang all}</a></li>
+                                    <li class="moderated {if $status=='0'} current{/if}"><a href="{link ctl=comments act=manage status=0}">{lang moderated} <span class="count">(<span class="pending-count">{if isset($status_nums[0])}{$status_nums[0]}{else}0{/if}</span>)</span></a></li>
+                                    <li class="blocked {if $status=='2'} current{/if}"><a href="{link ctl=comments act=manage status=2}">{lang blocked} <span class="count">(<span class="pending-count">{if isset($status_nums[2])}{$status_nums[2]}{else}0{/if}</span>)</span></a></li>
+                                    <li class="approved {if $status=='1'} current{/if}"><a href="{link ctl=comments act=manage status=1}">{lang approved} <span class="count">(<span class="pending-count">{if isset($status_nums[1])}{$status_nums[1]}{else}0{/if}</span>)</span></a></li>
+                                </ul>
+                               <div class="clear mb10"></div>
+                               {if $comments}
+                               <div class="commentlist">
+                                   <table class="datalist">
+                                       <thead>
+                                       <tr>
+                                           <th width="40"><input type="checkbox" class="selitem" onclick="Madmin.check_all('.selitem',this.checked)" value="1" /></th>
+                                           <th width="19%">{lang comment_user}</th>
+                                           <th>{lang comment_content}</th>
+                                           <th width="17%">{lang reply_to}</th>
+                                           <th width="100">{lang operate}</th>
+                                       </tr>
+                                       </thead>
+                                       <tbody>
+                                       {loop $comments $v}
+                                       <tr class="hover">
+                                           <td>
+                                            <input type="checkbox" value="1" name="sel_id[{$v['id']}]" class="selitem" />
+                                           </td>
+                                           <td class="comment_author">
+                                            <div class="oneline">
+                                               <strong><img src="{echo get_avatar($v)}" />
+                                                   {$v['author']}
+                                               </strong>
+                                               <br />
+                                               {$v['email']}
+                                               <br />
+                                               {$v['author_ip']}<br /></td>
+                                           <td class="comment_content"><div class="submit-on">{lang posted_at} <a href="{if $v['type']==1}{link ctl=photos act=index aid=$v['ref_id']}{else}{link ctl=photos act=view id=$v['ref_id']}{/if}#comment-{$v['id']}">{echo date('Y-m-d H:i:s',$v['post_time'])}</a> {if $v['reply_author']}| {lang replyed_to} <a href="{if $v['type']==1}{link ctl=photos act=index aid=$v['ref_id']}{else}{link ctl=photos act=view id=$v['ref_id']}{/if}#comment-{$v['pid']}">{$v['reply_author']}</a>{/if}</div>
+                                               <p>{$v['content']}</p>
+                                             </div></td>
+                                           <td>
+                                              <div class="oneline">
+                                               <a href="{if $v['type']==1}{link ctl=photos act=index aid=$v['subject']['id']}{else}{link ctl=photos act=view id=$v['subject']['id']}{/if}">{$v['subject']['name']}</a> <br /><span class="gray">{if $v['type']==1}({lang album}){else}({lang photo}){/if}</span>
+                                               <br /><span class="comments_num">{$v['subject']['comments_num']}</span>
+                                              </div>
+                                           </td>
+                                           <td>{if $v['status']==1}<a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=comments act=block id=$v['id']}')" class="c_block">{lang block}</a>{else}<a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=comments act=approve id=$v['id']}')" class="c_approve">{lang approve}</a>{/if} <a href="javascript:void(0)" onclick="admin_reply_comment(this,'{link ctl=comments act=reply id=$v['id']}')">{lang reply}</a> <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=comments act=confirm_delete id=$v['id']}')" class="c_delete">{lang delete}</a></td>
+                                       </tr>
+                                       {/loop}
+                                       <tfoot>
+                                           <tr>
+                                               <td><input type="checkbox" class="selitem" onclick="Madmin.check_all('.selitem',this.checked)" value="1" /></td>
+                                               <td colspan="4"><a href="javascript:void(0)" onclick="Madmin.checked_action('.selitem','{link ctl=comments act=confirm_delete_batch}');">{lang delete_selected}</a> | <a href="javascript:void(0)" onclick="Madmin.checked_action('.selitem','{link ctl=comments act=confirm_block_batch}');">{lang block_selected}</a> | <a href="javascript:void(0)" onclick="Madmin.checked_action('.selitem','{link ctl=comments act=confirm_approve_batch}');">{lang approve_selected}</a></td>
+                                           </tr>
+                                       </tfoot>
+                                       </tbody>
+                                   </table>
+                               </div>
+                               {else}
+                                  <div class="no_comments">{lang no_comments}</div>
+                               {/if}
+                       </div>
+                       <div class="paginator">
+                            {$pagestr}
+                       </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

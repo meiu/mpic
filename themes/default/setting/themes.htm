@@ -1,0 +1,42 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody" id="setting_layout">
+                    {template setting/setting_menu}
+                    <div class="innercol">
+                            <div class="innerconetent">
+                                <div class="themelist">
+                                {loop $themes $theme}
+                                    <div class="item">
+                                        <div class="preview">
+                                            {if $theme['preview']}
+                                            <img src="{$theme['preview']}" height="150" />
+                                            {else}
+                                            <img src="{$base_path}statics/img/nopreview.gif" />
+                                            {/if}
+                                        </div>
+                                        <div class="name {if $theme['iscurrent']}current{/if}">
+                                        {$theme['name']}
+                                        </div>
+                                        <div class="copyright">
+                                        {$theme['copyright']}
+                                        </div>
+                                        <div class="ctl">
+                                            {if $theme['withconfig']}<a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=setting act=theme_edit theme=$theme['dir']}',true);">{lang edit_style}</a>{/if} {if $theme['dir']!='default'}<a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=setting act=theme_confirm_remove theme=$theme['dir']}',true);">{lang delete}</a>{/if} {if $theme['iscurrent']}<span class="current">{lang using}</span>{else}  <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=setting act=theme_set theme=$theme['dir']}',true);">{lang enable}</a>{/if}
+                                        </div>
+                                    </div>
+                                {/loop}
+                                <div class="clear"></div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

@@ -1,0 +1,87 @@
+<!--{if $ajax}-->
+<div class="box_title titbg">
+    <div class="closer sprite i_close" onclick="Mui.box.close()"></div>
+    {lang user_login}
+</div>
+<div class="box_container">
+    <form id="login_form" action="{link ctl=users act=check_login}" method="post" onsubmit="return false;">
+        <div class="field">
+            <div class="label">{lang username}</div>
+            <div class="ipts"><input type="text" name="login_name" class="inputstyle iptw2" value="" /></div>
+            <div class="clear"></div>
+        </div>
+        <div class="field">
+            <div class="label">{lang password}</div>
+            <div class="ipts"><input type="password" name="login_pass" class="inputstyle iptw2" value="" /></div>
+            <div class="clear"></div>
+        </div>
+        {if $enable_login_captcha}
+        <div class="field">
+            <div class="label">{lang captcha_code} *</div>
+            <div class="ipts"><input type="text" style="width:100px;" class="inputstyle iptw1" name="captcha" /> <img src="{link ctl=captcha}" align="absmiddle" class="captcha" title="{lang click_to_reload}" onclick="reload_captcha(this)" /></div>
+            <div class="clear"></div>
+        </div>
+        {/if}
+        <div class="field">
+            <div class="label">&nbsp;</div>
+            <div class="ipts"><label><input type="checkbox" name="remember_pass" value="1" /> {lang remember_pass}</label></div>
+            <div class="clear"></div>
+        </div>
+        <div class="field">
+            <div class="label"> &nbsp;</div>
+            <div class="ipts"><input type="submit" value="{lang login}" class="ylbtn f_left" name="submit" onclick="Mui.form.sendAuto('login_form')"> <input type="button" value="{lang cancel}" class="ml10 graybtn f_left" name="cancel" onclick="Mui.box.close()"></div>
+            <div class="clear"></div>
+        </div>
+    </form>
+</div>
+<script>
+$('#login_form').find('input[name=login_name]').focus();
+</script>
+<!--{else}-->
+{template block/header}
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody">
+                    <div class="innercol">
+                       <div class="innerconetent" id="login_box">
+                           <form id="login_form" action="{link ctl=users act=check_login}" method="post" onsubmit="return false;">
+                              <input type="hidden" name="normal" value="1" />
+                               <div class="field">
+                                   <div class="label">{lang username}</div>
+                                   <div class="ipts"><input type="text" name="login_name" class="inputstyle iptw2" value="" /></div>
+                                   <div class="clear"></div>
+                               </div>
+                               <div class="field">
+                                   <div class="label">{lang password}</div>
+                                   <div class="ipts"><input type="password" name="login_pass" class="inputstyle iptw2" value="" /></div>
+                                   <div class="clear"></div>
+                               </div>
+                               {if $enable_login_captcha}
+                               <div class="field">
+                                  <div class="label">{lang captcha_code} *</div>
+                                  <div class="ipts"><input type="text" style="width:100px;" class="inputstyle iptw1" name="captcha" /> <img src="{link ctl=captcha}" align="absmiddle" class="captcha" title="{lang click_to_reload}" onclick="reload_captcha(this)" /></div>
+                                  <div class="clear"></div>
+                              </div>
+                              {/if}
+                               <div class="field">
+                                   <div class="label">&nbsp;</div>
+                                   <div class="ipts"><label><input type="checkbox" name="remember_pass" value="1" /> {lang remember_pass}</label></div>
+                                   <div class="clear"></div>
+                               </div>
+                               <div class="field">
+                                   <div class="label"> &nbsp;</div>
+                                   <div class="ipts"><input type="submit" value="{lang login}" class="ylbtn f_left" name="submit" onclick="Mui.form.sendAuto('login_form')"></div>
+                                   <div class="clear"></div>
+                               </div>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+           </td>
+       </tr>
+   </table>
+</div>
+{template block/footer}
+<!--{/if}-->

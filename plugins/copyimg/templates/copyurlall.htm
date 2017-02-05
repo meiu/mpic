@@ -1,0 +1,49 @@
+<div class="box_title titbg">
+  <div class="closer sprite i_close" onclick="Mui.box.close()"></div>
+ {lang copyimg:copy_all_urls}</div>
+<div class="box_container">
+<table align="center" id="listcopy1">
+    <tr>
+        <td>
+        <textarea id="all_textarea_1" style="display:none;">{$img_url}</textarea>
+        <textarea id="all_textarea_2" style="display:none;">{$img_ubb}</textarea>
+        <textarea id="all_textarea_3" style="display:none;">{$img_html}</textarea>
+        <label><input name="sel_copy_type" type="radio" value="1" />  {lang copyimg:img_url}</label>  <label><input name="sel_copy_type" type="radio" value="2" /> {lang copyimg:ubb_code}</label> <label><input name="sel_copy_type" type="radio" value="3" checked="checked" /> {lang copyimg:html_code}</label></td>
+    </tr>
+    <tr>
+        <td align="center"><textarea id="all_url_code_textarea" name="allcode" class="inputstyle iptw4 ipth2" onmouseover="$(this).select()"></textarea>
+</td>
+  </tr>
+  <tr>
+      <td><input type="button" class="copybtn ylbtn1" value="{lang copy}" /> <input type="button" class="ylbtn1" onclick="Mui.box.close()" value="{lang cancel}" /></td>
+  </tr>
+</table>
+</div>
+<script type="text/javascript" >
+ZeroClipboard.setMoviePath( '{$base_path}plugins/copyimg/ZeroClipboard.swf' );
+var clip = new ZeroClipboard.Client();
+Mui.box.onClose = function(){
+    clip.destroy();
+}
+$(function(){
+    var current_code = $('#listcopy1').find('input[name=sel_copy_type]:checked').val();
+    $('#all_url_code_textarea').val($('#all_textarea_'+current_code).val());
+    $('#listcopy1').find('input[name=sel_copy_type]').click(function(){
+        $('#all_url_code_textarea').val($('#all_textarea_'+this.value).val());
+        clip.setText( $('#all_textarea_'+this.value).val());
+    });
+    $('#listcopy1').find('input.copybtn').mouseover( function() {
+        clip.setText( $('#all_url_code_textarea').val() );
+        var button = this;
+        clip.addEventListener('complete',function(o){
+            show_copy_notice(button,"{lang copyimg:copy_success}");
+        })
+        if (clip.div) {
+            clip.receiveEvent('mouseout', null);
+            clip.reposition(this);
+        }
+        else clip.glue(this,'meiu_float_box');
+        clip.receiveEvent('mouseover', null);
+    } );
+});
+</script>

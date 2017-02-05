@@ -1,0 +1,141 @@
+{template block/header}
+<div id="bodywrap" class="mainbody">
+	<div class="index_box">
+		<div class="box_title">
+			<h2><a class="f_right" href="{link ctl=albums}">{lang all_albums}</a>{lang new_albums}</h2>
+		</div>
+		<div class="gallary_wrap grid">
+			{mp:album action="lists" order=ct_desc type=0 num=4 cache=300}
+			{if $data}
+			{loop $data $album}
+			<div class="gallary_item album idx">
+				<div class="item">
+					<div class="pic_box">
+						<!--load photo info-->
+						
+						<table><tr><td>
+							<a href="{link ctl=photos act=index aid=$album['id']}">
+							{if $album['cover_id']}
+							{mp:photo action="load" id=$album['cover_id'] return=photo}
+							<img alt="media" src="{img $photo['thumb']}" />
+							{else}
+							<img alt="media" src="{$base_path}statics/img/nophoto.gif" />
+							{/if}
+							</a>
+						</td></tr></table>
+						{/mp}
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="info">
+					<div class="title">
+						<span class="name"><a href="{link ctl=photos act=index aid=$album['id']}">{$album['name']}</a></span>
+					</div>
+					<p class="gray">{echo date('Y-m-d',$album['create_time'])}, {lang photos_num|`$album['photos_num']`}</p>
+				</div>
+			</div>
+			{/loop}
+			{else}
+			<div class="no_records">
+				 {lang no_records}
+			</div>
+			{/if}
+			{/mp}
+		</div>
+	</div>
+	
+	<div class="index_box">
+		<div class="box_title">
+			<h2>{lang new_photos}</h2>
+		</div>
+		<div class="gallary_wrap grid">
+			{mp:photo action="lists" is_open=1 order=tu_desc num=8 cache=300}
+			{if $data}
+				{loop $data $ph}
+				<div class="gallary_item idx">
+					<div class="item">
+						<div class="pic_box">
+							<table><tr><td>
+								<a href="{link ctl=photos act=view id=$ph['id']}"><img alt="media" src="{img $ph['thumb']}" /></a>
+							</td></tr></table>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="info">
+						<div class="title">
+							<span class="name"><a href="{link ctl=photos act=view id=$ph['id']}">{$ph['name']}</a></span>
+						</div>
+						<p class="gray">{echo date('Y-m-d',$ph['create_time'])}</p>
+					</div>
+				</div>
+				{/loop}
+			{else}
+			<div class="no_records">
+				 {lang no_records}
+			</div>
+			{/if}
+			{/mp}
+		</div>
+	</div>
+	
+	
+	<!--{if $_config['showindexcomment'] && get_config('system.enable_comment')}-->
+	<div class="index_comments_block">
+		<div class="index_box f_left">
+			<div class="box_title">
+				<h2>{lang new_comment_for_albums}</h2>
+			</div>
+			<div class="index_comments">
+				{mp:comment action="lists" type=1 num=5 cache=300}
+				{if $data}
+					{loop $data $cmt}
+					<div class="cmt_item">
+						<div class="f_left fce">
+							<img src="{echo get_avatar($cmt)}" />
+						</div>
+						<div class="cnt">
+							<div class="c1">{$cmt['author']}<span class="gray"> - <a href="<!--{link ctl=photos act=index aid=$cmt['ref_id']}-->#comment-{$cmt['id']}">{echo date('Y-m-d H:i:s',$cmt['post_time'])}</a> </span></div>
+							<div class="c2">{$cmt['content']}</div>
+						</div>
+					</div>
+					{/loop}
+				{else}
+					<div class="no_records">
+						 {lang no_records}
+					</div>
+				{/if}
+				{/mp}
+			</div>
+		</div>
+
+		<div class="index_box f_right">
+			<div class="box_title">
+				<h2>{lang new_comment_for_photos}</h2>
+			</div>
+			<div class="index_comments">
+				{mp:comment action="lists" type=2 num=5 cache=300}
+				{if $data}
+					{loop $data $cmt}
+					<div class="cmt_item">
+						<div class="f_left fce">
+							<img src="{echo get_avatar($cmt)}" />
+						</div>
+						<div class="cnt">
+							<div class="c1">{$cmt['author']}<span class="gray"> - <a href="<!--{link ctl=photos act=view id=$cmt['ref_id']}-->#comment-{$cmt['id']}">{echo date('Y-m-d H:i:s',$cmt['post_time'])}</a> </span></div>
+							<div class="c2">{$cmt['content']}</div>
+						</div>
+					</div>
+					{/loop}
+				{else}
+					<div class="no_records">
+						 {lang no_records}
+					</div>
+				{/if}
+				{/mp}
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<!--{/if}-->
+</div>
+{template block/footer}

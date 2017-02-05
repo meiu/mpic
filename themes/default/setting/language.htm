@@ -1,0 +1,46 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody" id="setting_layout">
+                    {template setting/setting_menu}
+                    <div class="innercol">
+                            <div class="innerconetent">
+                                <form id="setting_language_form" action="{link ctl=setting act=save_language}" method="post" onsubmit="return false;">
+                                    <div class="settingfield">
+                                        <div class="label">{lang system_language_label}</div>
+                                        <div class="descinfo">{lang system_language_tips}</div>
+                                        <div class="input">
+                                            <select name="system[language]">
+                                            {loop $lang_list $v}
+                                            <option value="{$v['name']}" {if $v['name']==$current_lang}selected="selected"{/if}>{$v['lang_name']}</option>
+                                            {/loop}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="settingfield">
+                                        <div class="label">{lang system_timeoffset_label}</div>
+                                        <div class="descinfo">{lang system_timeoffset_tips}</div>
+                                        <div class="input">
+                                            <select name="system[timezone]">
+                                            {loop $time_zones $k $v}
+                                            <option value="{$v}" {if $v==$current_timezone}selected="selected"{/if}> {$k} {if $v>0}+{/if}{$v}</option>
+                                            {/loop}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="ctl_button">
+                                        <input type="submit" name="submit" class="ylbtn" value="{lang save_setting}" onclick="Mui.form.sendPop('setting_language_form')" />
+                                    </div>
+                                </form>
+                            </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

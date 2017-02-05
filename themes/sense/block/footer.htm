@@ -1,0 +1,12 @@
+<div class="footer wrap">{$footer}
+    {if $show_process_info}
+    &nbsp;&nbsp;
+    Processed in {echo timer_read('page');}ms
+    {/if}
+</div>
+{if isset($page_foot)}{$page_foot}{/if}
+<script type="text/javascript">
+$.Placeholder.init();
+</script>
+</body>
+</html>

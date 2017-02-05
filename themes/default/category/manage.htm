@@ -1,0 +1,37 @@
+{template block/header}
+
+<div id="bodywrap">
+    <table class="layout">
+        <tr>
+            <td class="left">
+                <div class="mainbody" id="setting_layout">
+                    {template setting/setting_menu}
+                    <div class="innercol">
+                       <div class="innerconetent">
+                            <ul class="category_list">
+                            <!--{loop $categorylist $row}-->
+                            <li>
+                                <div class="f_right">
+                                <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=category act=create pid=$row['id']}',true)" class="i ml10" title="{lang create_sub_category}"><span class="i_add sprite"></span> {lang create_sub_category}</a>
+                                <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=category act=edit id=$row['id']}',true)" class="i" title="{lang edit}"><span class="i_edit sprite"></span> {lang edit}</a>
+                                <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=category act=confirm_delete id=$row['id']}')" class="i" title="{lang delete}"><span class="i_littletrash sprite"></span> {lang delete}</a>
+                                </div>
+                                <!--{for $i=1;$i<=$row['deep'];$i++}-->
+                                    <span class="treebg tree{$i}"></span>
+                                <!--{/for}-->
+                                <a href="{link ctl=albums act=index cate=$row['id']}">{$row['name']}</a> 
+                            </li>
+                            <!--{/loop}-->
+                            </ul>
+
+                            <div class="manage_btns"><div class="bigbutton"><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=category act=create}',true);"><span>{lang create_category}</span></a></div>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{template block/footer}

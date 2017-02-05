@@ -1,0 +1,41 @@
+<div class="close png" onclick="Mui.bubble.close();">X</div>
+<table id="listcopy">
+    <tr>
+        <td> {lang copyimg:img_url}</td>
+        <td><input type="text" class="inputstyle iptw1" name="imgcode" value="{$photo_info['path']}" onmouseover="$(this).select()" /> <input type="button" class="ylbtn1" value="{lang copy}" /></td>
+    </tr>
+    <tr>
+        <td> {lang copyimg:ubb_code}</td>
+        <td><input type="text" class="inputstyle iptw1" name="ubbcode" value="[IMG]{$photo_info['path']}[/IMG]" onmouseover="$(this).select()" /> <input type="button" class="ylbtn1" value="{lang copy}" /></td>
+    </tr>
+    <tr>
+        <td> {lang copyimg:html_code}</td>
+        <td><input type="text" class="inputstyle iptw1" name="htmlcode" value="{$html_code}" onmouseover="$(this).select()" /> <input type="button" class="ylbtn1" value="{lang copy}" /></td>
+    </tr>
+</table>
+<script>
+ZeroClipboard.setMoviePath( '{$base_path}plugins/copyimg/ZeroClipboard.swf' );
+var clip = new ZeroClipboard.Client();
+Mui.bubble.onClose = function(){
+    clip.destroy();
+}
+$(function(){
+    $('#listcopy').find('input[type=button]').mouseover( function() {
+        clip.setText( $(this).prev().val() );
+        var button = this;
+        clip.addEventListener('complete',function(o){
+            show_copy_notice(button,"{lang copyimg:copy_success}");
+            //setTimeout(function(){
+            //    Mui.bubble.close();
+            //},1300);
+        })
+        if (clip.div) {
+            clip.receiveEvent('mouseout', null);
+            clip.reposition(this);
+        }
+        else clip.glue(this);
+        clip.receiveEvent('mouseover', null);
+    } );
+});
+
+</script>

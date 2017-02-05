@@ -1,0 +1,15 @@
+<div class="col titbg">
+{if IN_ACT=='index'}<h1 class="f_left">{lang basic_setting}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting}">{lang basic_setting}</a></h4>{/if}
+{if IN_ACT=='display'}<h1 class="f_left">{lang display_setting}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=display}">{lang display_setting}</a></h4>{/if}
+{if IN_ACT=='language'}<h1 class="f_left">{lang language_and_locale}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=language}">{lang language_and_locale}</a></h4>{/if}
+{if IN_ACT=='upload'}<h1 class="f_left">{lang upload_setting}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=upload}">{lang upload_setting}</a></h4>{/if}
+{if IN_ACT=='watermark'}<h1 class="f_left">{lang watermark_setting}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=watermark}">{lang watermark_setting}</a></h4>{/if}
+{if IN_ACT=='themes'}<h1 class="f_left">{lang theme_setting}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=themes}">{lang theme_setting}</a></h4>{/if}
+{if IN_ACT=='plugins'}<h1 class="f_left">{lang plugin_setting}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=plugins}">{lang plugin_setting}</a></h4>{/if}
+{if IN_ACT=='nav'}<h1 class="f_left">{lang setting_nav}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=nav}">{lang setting_nav}</a></h4>{/if}
+{if IN_CTL=='category'&&IN_ACT=='manage'}<h1 class="f_left">{lang category_manage}</h1>{else}<h4 class="f_left"><a href="{link ctl=category act=manage}">{lang category_manage}</a></h4>{/if}
+{$setting_menu}
+{if IN_CTL=='comments'}<h1 class="f_left">{lang comments_manage}</h1>{else}<h4 class="f_left"><a href="{link ctl=comments act=manage}">{lang comments_manage}</a></h4>{/if}
+{if IN_ACT=='info'}<h1 class="f_left">{lang system_info}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=info}">{lang system_info}</a></h4>{/if}
+{$setting_menu}
+</div>

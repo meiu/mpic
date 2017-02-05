@@ -1,0 +1,48 @@
+    <!--{loop $comments_list $v}-->
+    <div class="cmt_item bd-b" id="comment-{$v['id']}">
+    <div class="bd-a">
+        <div class="f_left cmt_fce">
+            <img src="{echo get_avatar($v)}" />
+        </div>
+        <div class="thde">
+            <span class="f_right">
+                {echo date('Y-m-d H:i:s',$v['post_time'])}
+            </span>
+            <div class="tt">
+                <span class="title_c">{$v['author']}</span>
+            </div>
+            <div class="cnt">
+                {$v['content']}
+            </div>
+            <div class="ctlbtn">
+                <a href="javascript:void(0);" onclick="reply_comment(this,'{link ctl=comments act=reply id=$v['id']}');">{lang reply}</a>  <!--{if $loggedin}--><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=comments act=confirm_delete id=$v['id']}',true)">{lang delete}</a>  <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=comments act=block id=$v['id']}')">{lang block}</a><!--{/if}-->
+            </div>
+            <!--{loop $v['sub_comments'] $vv}-->
+            <div class="cmt_item bdwt sub" id="comment-{$vv['id']}">
+                <div class="f_left cmt_fce">
+                    <img src="{echo get_avatar($vv)}" />
+                </div>
+                <div class="thde">
+                    <span class="f_right">
+                        {echo date('Y-m-d H:i:s',$vv['post_time'])}
+                    </span>
+                    <div class="tt">
+                        <span class="title_c">{$vv['author']}</span> {lang reply} <span class="title_c">{$vv['reply_author']}</span>
+                    </div>
+                    <div class="cnt">
+                        {$vv['content']}
+                    </div>
+                    <div class="ctlbtn">
+                        <a href="javascript:void(0);" onclick="reply_comment(this,'{link ctl=comments act=reply id=$vv['id']}');">{lang reply}</a>  <!--{if $loggedin}--><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=comments act=confirm_delete id=$vv['id']}',true)">{lang delete}</a>  <a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=comments act=block id=$vv['id']}')">{lang block}</a><!--{/if}-->
+                    </div>
+                </div>
+            </div>
+            <!--{/loop}-->
+        </div>
+    </div>
+    </div>
+    <!--{/loop}-->
+    {if $comments_total_page > $comments_current_page}
+    {php $page=$comments_current_page+1;}
+    <div class="more_comments" onclick="load_comments('{link ctl=comments act=more ref_id=$ref_id type=$comments_type page=$page}')">{lang load_more_comments} ({$comments_current_page}/{$comments_total_page})</div>
+    {/if}

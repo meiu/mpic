@@ -1,0 +1,10 @@
+<div class="box_title titbg">
+    <div class="closer sprite i_close" onclick="Mui.box.close()"></div>
+    {lang notice_title}
+</div>
+<div class="box_container">
+    <div>{lang confirm_delete_photo_batch}</div>
+    <div class="b_btns">
+        <input type="submit" value="{lang delete}" class="ylbtn f_left" name="submit" onclick="Madmin.checked_action('.selitem','{link ctl=photos act=delete_batch}');"> <input type="button" value="{lang cancel}" class="ml10 graybtn f_left" name="cancel" onclick="Mui.box.close()">
+    </div>
+</div>

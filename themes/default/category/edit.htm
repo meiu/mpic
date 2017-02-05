@@ -1,0 +1,41 @@
+<div class="box_title titbg">
+    <div class="closer sprite i_close" onclick="Mui.box.close()"></div>
+    编辑分类
+</div>
+<div class="box_container">
+    <form id="category_modify" action="{link ctl=category act=update id=$info['id']}" method="post" onsubmit="return false;">
+        <div class="field">
+            <div class="label">{lang category_name} *</div>
+            <div class="ipts"><input type="text" name="cate_name" class="inputstyle iptw1" value="{$info['name']}" /></div>
+            <div class="clear"></div>
+        </div>
+        <div class="field">
+            <div class="label">{lang parent_category}</div>
+            <div class="ipts"><select id="par_id" name="par_id">
+                <option value="0">{lang no_parent}</option>
+                <!--{loop $cate_list $k $v}-->
+                    <option value="{$v['id']}" {if $v['id']==$info['par_id']}selected="selected"{/if}>{echo str_repeat('--',$v['deep'])}{$v['name']}</option>
+                <!--{/loop}-->
+            </select></div>
+            <div class="clear"></div>
+        </div>
+        <div class="field">
+            <div class="label">{lang sort} </div>
+            <div class="ipts"><input type="text" name="sort" class="inputstyle iptw0" value="{$info['sort']}" /></div>
+            <div class="clear"></div>
+        </div>
+        <div class="field">
+            <div class="label">{lang add_to_nav} </div>
+            <div class="ipts"><input type="checkbox" name="add_nav" value="1" /></div>
+            <div class="clear"></div>
+        </div>
+        <div class="field">
+            <div class="label"> &nbsp;</div>
+            <div class="ipts"><input type="submit" value="{lang save}" class="ylbtn f_left" name="submit" onclick="Mui.form.sendAuto('category_modify')"> <input type="button" value="{lang cancel}" class="ml10 graybtn f_left" name="cancel" onclick="Mui.box.close()"></div>
+            <div class="clear"></div>
+        </div>
+    </form>
+</div>
+<script>
+$('#category_modify').find('input[name=cate_name]').focus();
+</script>

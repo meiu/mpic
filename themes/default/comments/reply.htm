@@ -1,0 +1,41 @@
+<form class="reply_form" action="{link ctl=comments act=save_reply}" method="post" onsubmit="return false;">
+    <input type="hidden" name="ref_id" value="{$info['ref_id']}" />
+    <input type="hidden" name="pid" value="{$info['pid']}" />
+    <input type="hidden" name="type" value="{$info['type']}" />
+    <input type="hidden" name="reply_author" value="{$info['author']}" />
+    {if $loggedin}
+    <div class="field">
+        {lang loginwith|<span class="title_c">`$u_info['user_nicename']`</span>}<a href="{link ctl=users act=logout}"  onclick="Mui.box.show(this.href);return false;">{lang logout}</a> ?
+        <input type="hidden" name="email" value="{if isset($u_extrainfo['email'])}{$u_extrainfo['email']}{/if}" />
+        <input type="hidden" name="author" value="{$u_info['user_nicename']}" />
+    </div>
+    {else}
+    <div class="field">
+        <div class="label">{lang email} </div>
+        <div class="ipts"><input type="text" class="inputstyle iptw2" name="email" /></div>
+        <div class="clear"></div>
+    </div>
+    <div class="field">
+        <div class="label">{lang comment_user} *</div>
+        <div class="ipts"><input type="text" class="inputstyle iptw2" name="author" /></div>
+        <div class="clear"></div>
+    </div>
+    {if $enable_comment_captcha}
+    <div class="field">
+        <div class="label">{lang captcha_code} *</div>
+        <div class="ipts"><input type="text" class="inputstyle iptw1" name="captcha" /> <img src="{link ctl=captcha}" align="absmiddle" class="captcha" title="{lang click_to_reload}" onclick="reload_captcha(this)" /></div>
+        <div class="clear"></div>
+    </div>
+    {/if}
+    {/if}
+    <div class="field">
+        <div class="label">{lang comment_content} *</div>
+        <div class="ipts"><textarea class="inputstyle ipttextarea" name="content"></textarea></div>
+        <div class="clear"></div>
+    </div>
+    <div class="field">
+        <div class="label"> &nbsp;</div>
+        <div class="ipts"><input type="submit" name="submit" class="ylbtn" value="{lang post_comments}" /> <input type="button" name="cancel" class="graysmlbtn" value="{lang cancel}" /></div>
+        <div class="clear"></div>
+    </div>
+</form>

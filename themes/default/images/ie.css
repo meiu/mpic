@@ -1,0 +1,32 @@
+a span.sprite{
+    cursor: hand;
+}
+#photo_body div.ctl{
+    background:url(transparent.gif);
+}
+#photo_body div.ctl div.next{
+    right:-3px;
+}
+
+#header #settings_person span.pipe{
+    filter:alpha(opacity=60);
+}
+
+.grid .gallary_wrap .gallary_item{
+    float:left;
+}
+/*comments*/
+.more_comments{
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#FDFDFD, endColorstr=#ECECEC);
+}
+
+.data_tab li{
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#ffffff, endColorstr=#eeeeee);
+}
+.data_tab li.current{
+    filter: none;
+}
+
+table.datalist thead th{
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#FDFDFD, endColorstr=#E5E5E5);
+}

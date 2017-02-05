@@ -1,0 +1,78 @@
+<div class="box_title titbg">
+    <div class="closer sprite i_close" onclick="Mui.box.close()"></div>
+    {lang create_album}
+</div>
+<div class="box_container">
+    <form id="albums_create" action="{link ctl=albums act=save}" method="post" onsubmit="return false;">
+        <div class="field">
+            <div class="label">{lang album_name} *</div>
+            <div class="ipts"><input type="text" name="album_name" class="inputstyle iptw1" /></div>
+            <div class="clear"></div>
+        </div>
+        <div class="field">
+            <div class="label">{lang album_desc}</div>
+            <div class="ipts"><textarea name="desc" class="inputstyle iptw3 ipth1"></textarea></div>
+            <div class="clear"></div>
+        </div>
+		<div class="field">
+            <div class="label">{lang belong_category}</div>
+            <div class="ipts"><select id="cate_id" name="cate_id">
+				<option value="0">{lang not_cate}</option>
+                <!--{loop $cate_list $k $v}-->
+                    <option value="{$v['id']}" {if $cate_id==$v['id']}selected="selected"{/if}>{echo str_repeat('--',$v['deep'])}{$v['name']}</option>
+                <!--{/loop}-->
+            </select> <span class="gray"><a href="javascript:void(0)" onclick="Mui.box.show('{link ctl=category act=create from=$fromurl}',true)" class="ml10">{lang create_category}</a></span></div>
+            <div class="clear"></div>
+        </div>
+        <div class="field">
+            <div class="label">{lang priv_setting}</div>
+            <div class="ipts"><label><input type="radio" name="priv_type" value="0" checked="checked" onclick="$('#filed_password').hide();$('#filed_question').hide();" /> {lang type_public}</label> <label><input type="radio" name="priv_type" value="1" onclick="$('#filed_password').show();$('#filed_question').hide();" /> {lang type_passwd}</label> <label><input type="radio" name="priv_type" value="2" onclick="$('#filed_password').hide();$('#filed_question').show();" /> {lang type_ques}</label> <label><input type="radio" name="priv_type" value="3" onclick="$('#filed_password').hide();$('#filed_question').hide();" /> {lang type_private}</label> </div>
+            <div class="clear"></div>
+        </div>
+        <div id="filed_password" style="display:none;">
+            <div class="field">
+                <div class="label">{lang input_passwd} *</div>
+                <div class="ipts">
+                    <input id="password_ipt" type="password" name="priv_pass" class="inputstyle iptw1" value="" /><input class="ml5" type="checkbox" value="1" onclick="setMask('password_ipt',this.checked)" /> {lang show_pass}
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div id="filed_question" style="display:none;">
+            <div class="field">
+                <div class="label">{lang input_question} *</div>
+                <div class="ipts">
+                    <input type="text" name="priv_question" class="inputstyle iptw1" /> <span class="gray">{lang input_question_tips}</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="field">
+                <div class="label">{lang input_answer} *</div>
+                <div class="ipts">
+                   <input type="text" name="priv_answer" class="inputstyle iptw1" /> <span class="gray">{lang input_answer_tips}</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="label">{lang album_tags}</div>
+            <div class="ipts"><input type="text" name="album_tags" class="inputstyle iptw1" /> <span class="gray">{lang tags_tips}</span></div>
+            <div class="clear"></div>
+        </div>
+        <!--{if $system_enable_comment}-->
+        <div class="field">
+            <div class="label">{lang enable_comment_label}</div>
+            <div class="ipts"><input type="checkbox" name="enable_comment" value="1" checked="checked" /> <span class="gray"></span></div>
+            <div class="clear"></div>
+        </div>
+        <!--{/if}-->
+        <div class="field">
+            <div class="label"> &nbsp;</div>
+            <div class="ipts"><input type="submit" value="{lang create_album}" class="ylbtn f_left" name="submit" onclick="Mui.form.sendAuto('albums_create')"> <input type="button" value="{lang cancel}" class="ml10 graybtn f_left" name="cancel" onclick="Mui.box.close()"></div>
+            <div class="clear"></div>
+        </div>
+    </form>
+</div>
+<script>
+$('#albums_create').find('input[name=album_name]').focus();
+</script>
