@@ -17,7 +17,7 @@ class plugin_cla{
     var $merged_filters = array();
     var $current_filter = array();
     
-    function plugin_cla(){
+    function __construct(){
         $this->db = & loader::database();
     }
     /**

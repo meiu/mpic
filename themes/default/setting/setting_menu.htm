@@ -8,7 +8,7 @@
 {if IN_ACT=='plugins'}<h1 class="f_left">{lang plugin_setting}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=plugins}">{lang plugin_setting}</a></h4>{/if}
 {if IN_ACT=='nav'}<h1 class="f_left">{lang setting_nav}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=nav}">{lang setting_nav}</a></h4>{/if}
 {if IN_CTL=='category'&&IN_ACT=='manage'}<h1 class="f_left">{lang category_manage}</h1>{else}<h4 class="f_left"><a href="{link ctl=category act=manage}">{lang category_manage}</a></h4>{/if}
-{$setting_menu}
+
 {if IN_CTL=='comments'}<h1 class="f_left">{lang comments_manage}</h1>{else}<h4 class="f_left"><a href="{link ctl=comments act=manage}">{lang comments_manage}</a></h4>{/if}
 {if IN_ACT=='info'}<h1 class="f_left">{lang system_info}</h1>{else}<h4 class="f_left"><a href="{link ctl=setting act=info}">{lang system_info}</a></h4>{/if}
 {$setting_menu}

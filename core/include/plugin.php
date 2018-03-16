@@ -9,7 +9,7 @@
 class plugin{
     var $config = array();
     
-    function plugin($config = null){
+    function __construct($config = null){
         if(!is_null($config)){
             $this->config = array_merge($this->config, $config);
         }

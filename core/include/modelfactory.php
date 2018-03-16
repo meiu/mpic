@@ -13,8 +13,7 @@ class modelfactory{
     var $default_order = 'id desc';
     var $table_name = null;
     var $pageset = 10;
-    
-    function modelfactory(){
+    function __construct(){
         $this->db =& loader::database();
     }
     

@@ -8,7 +8,7 @@
  */
 
 class comment_tag_mdl{
-    function comment_tag_mdl(){
+    function __construct(){
         $this->comment =& loader::model('comment');
     }
     

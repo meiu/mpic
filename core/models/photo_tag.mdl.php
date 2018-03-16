@@ -8,7 +8,7 @@
  */
 
 class photo_tag_mdl{
-    function photo_tag_mdl(){
+    function __construct(){
         $this->photo =& loader::model('photo');
     }
     

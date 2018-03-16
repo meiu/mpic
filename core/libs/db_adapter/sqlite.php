@@ -55,8 +55,7 @@ Class adapter_sqlite{
      * @var Array
      */
     var $_transErrors = array();
-
-    function adapter_sqlite($dbinfo){
+    function __construct($dbinfo){
         if(is_array($dbinfo)){
             $this->dbinfo=$dbinfo;
         }else{

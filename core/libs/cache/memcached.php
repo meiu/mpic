@@ -70,7 +70,7 @@ class cache_memcached{
      *
      * @param 缓存策略 $policy
      */
-    function cache_memcached(array $policy = null)
+    function __construct(array $policy = null)
     {
         if (!extension_loaded('memcache')){
             exit('The memcache extension must be loaded before use!');

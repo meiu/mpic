@@ -341,10 +341,11 @@ class photos_ctl extends pagecore{
         //用来保存自定义的数据
         $extra = $this->getPost('extra');
         //过滤一下
-        foreach($extra as $k=>$v){
-            $extra[$k] = safe_convert($v);
-        }
-
+	if($extra){
+	        foreach($extra as $k=>$v){
+	            $extra[$k] = safe_convert($v);
+	        }
+	}
         if($album['name'] == ''){
             form_ajax_failed('text',lang('photo_name_empty'));
         }

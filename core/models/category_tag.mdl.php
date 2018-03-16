@@ -8,7 +8,7 @@
  */
 
 class category_tag_mdl{
-    function category_tag_mdl(){
+    function __construct(){
         $this->category =& loader::model('category');
     }
     

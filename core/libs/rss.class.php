@@ -17,8 +17,8 @@ class rss_cla
     var $pubDate;
     var $items;
     var $tags;
- 
-    function rss_cla() {
+    
+    function __construct() {
         $this->items = array();
         $this->tags  = array();
     }

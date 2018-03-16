@@ -51,8 +51,9 @@ Class adapter_mysqli{
      * @var Array
      */
     var $_transErrors = array();
-            
-    function adapter_mysqli($dbinfo){
+    
+
+    function __construct($dbinfo){
         if(is_array($dbinfo)){
             $this->dbinfo=$dbinfo;
         }else{

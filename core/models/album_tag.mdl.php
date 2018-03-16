@@ -8,7 +8,7 @@
  */
 
 class album_tag_mdl{
-    function album_tag_mdl(){
+    function __construct(){
         $this->album =& loader::model('album');
     }
     

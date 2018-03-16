@@ -9,7 +9,7 @@
  * @copyright : (c)2010 - 2011 meiu.cn lingter@gmail.com
  */
 class image_cla{
-    function image_cla(){
+    function __construct(){
         $this->class_name = 'image_'.(defined('IMG_ENGINE')?constant('IMG_ENGINE'):'gd');
         if(file_exists(LIBDIR.'img_engine/'.$this->class_name.'.php')){
             require_once(LIBDIR.'img_engine/'.$this->class_name.'.php');

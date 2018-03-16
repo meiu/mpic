@@ -16,8 +16,8 @@ class user_mdl extends modelfactory{
     var $LOGIN_FLAG = false;
     var $table_name = '#@users';
     
-    function user_mdl(){
-        parent::modelfactory();
+    function __construct(){
+        parent::__construct();
         $config =& loader::config();
         
         $this->cookie_name = $config['cookie_name'];

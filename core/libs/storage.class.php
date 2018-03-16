@@ -8,8 +8,8 @@
  * @copyright : (c)2010 - 2011 meiu.cn lingter@gmail.com
  */
 class storage_cla{
-    
-    function storage_cla(){
+
+    function __construct(){
         $this->class_name = 'stor_'.(defined('STORAGE_ENGINE')?constant('STORAGE_ENGINE'):'file');
         if(file_exists(LIBDIR.'stor_engine/'.$this->class_name.'.php')){
             require_once(LIBDIR.'stor_engine/'.$this->class_name.'.php');

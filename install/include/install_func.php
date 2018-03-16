@@ -624,13 +624,13 @@ function show_next_step($step, $error_code) {
     echo "</form>\n";
 }
 
-function check_db($dbhost, $dbuser, $dbpw, $dbname, $tablepre) {
-    if(!function_exists('mysql_connect')) {
-        show_msg('undefine_func', 'mysql_connect', 0);
+function check_db($dbhost, $dbuser, $dbpw, $dbname, $tablepre,$dbport) {
+    if(!function_exists('mysqli_connect')) {
+        show_msg('undefine_func', 'mysqli_connect', 0);
     }
-    if(!@mysql_connect($dbhost, $dbuser, $dbpw)) {
-        $errno = mysql_errno();
-        $error = mysql_error();
+    if(!$link = @mysqli_connect($dbhost, $dbuser, $dbpw,null,$dbport)) {
+        $errno = mysqli_errno();
+        $error = mysqli_errno();
         if($errno == 1045) {
             show_msg('database_errno_1045', $error, 0);
         } elseif($errno == 2003) {
@@ -639,8 +639,8 @@ function check_db($dbhost, $dbuser, $dbpw, $dbname, $tablepre) {
             show_msg('database_connect_error', $error, 0);
         }
     } else {
-        if($query = @mysql_query("SHOW TABLES FROM $dbname")) {
-            while($row = mysql_fetch_row($query)) {
+        if($query = @mysqli_query($link,"SHOW TABLES FROM $dbname")) {
+            while($row = mysqli_fetch_row($query)) {
                 if(preg_match("/^$tablepre/", $row[0])) {
                     return false;
                 }

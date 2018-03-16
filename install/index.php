@@ -135,7 +135,7 @@ if($method == 'license'){
         $forceinstall = isset($_POST['mysqldbinfo']['forceinstall']) ? $_POST['mysqldbinfo']['forceinstall'] : '';
         $dbname_not_exists = true;
         if(!empty($dbhost) && $dbadapter=='mysql' && empty($forceinstall)) {
-            $dbname_not_exists = check_db($dbhost, $dbuser, $dbpw, $dbname, $tablepre);
+            $dbname_not_exists = check_db($dbhost, $dbuser, $dbpw, $dbname, $tablepre,$dbport);
             if(!$dbname_not_exists) {
                 $form_db_init_items['mysqldbinfo']['forceinstall'] = array('type' => 'checkbox', 'required' => 0, 'reg' => '/^.*+/');
                 $error_msg['mysqldbinfo']['forceinstall'] = 1;
@@ -167,9 +167,9 @@ if($method == 'license'){
             if(empty($dbname)) {
                 show_msg('dbname_invalid', $dbname, 0);
             } else {
-                if(!$link = @mysql_connect($dbhost.':'.$dbport, $dbuser, $dbpw)) {
-                    $errno = mysql_errno($link);
-                    $error = mysql_error($link);
+                if(!$link = @mysqli_connect($dbhost, $dbuser, $dbpw,null,$dbport)) {
+                    $errno = mysqli_errno($link);
+                    $error = mysqli_error($link);
                     if($errno == 1045) {
                         show_msg('database_errno_1045', $error, 0);
                     } elseif($errno == 2003) {
@@ -179,17 +179,17 @@ if($method == 'license'){
                     }
                 }
 
-                if(mysql_get_server_info() > '4.1') {
-                    mysql_query("SET　NAMES 'utf8'");
-                    mysql_query("CREATE DATABASE IF NOT EXISTS `$dbname` DEFAULT CHARACTER SET utf8", $link);
+                if(mysqli_get_server_info() > '4.1') {
+                    mysqli_query($link,"SET　NAMES 'utf8'");
+                    mysqli_query($link, "CREATE DATABASE IF NOT EXISTS `$dbname` DEFAULT CHARACTER SET utf8");
                 } else {
-                    mysql_query("CREATE DATABASE IF NOT EXISTS `$dbname`", $link);
+                    mysqli_query($link,"CREATE DATABASE IF NOT EXISTS `$dbname`");
                 }
 
-                if(mysql_errno()) {
+                if(mysqli_errno()) {
                     show_msg('database_errno_1044', mysql_error(), 0);
                 }
-                mysql_close($link);
+                mysqli_close($link);
             }
 
             if(strpos($tablepre, '.') !== false) {

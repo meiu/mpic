@@ -27,7 +27,7 @@ class cache_file
     var $_head_len = 64;
     var $_static_head_len = 16;
 
-    function cache_file($policy = null){
+    function __construct($policy = null){
         if(is_array($policy)){
             $this->_default_policy = array_merge($this->_default_policy, $policy);
         }

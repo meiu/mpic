@@ -8,7 +8,7 @@
  */
 
 class tag_tag_mdl{
-    function tag_tag_mdl(){
+    function __construct(){
         $this->tag =& loader::model('tag');
     }
     

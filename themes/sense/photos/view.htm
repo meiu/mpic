@@ -23,23 +23,12 @@
                             
                             <div class="photo_main">
                                 <h1>
-                                    <span></span>
                                     <!--{if $loggedin}-->
                                     <div class="inline_edit" title="{lang click_editable}" onclick="Madmin.inline_edit(this,'{link ctl=photos act=modify_name_inline id=$info['id']}')">{$info['name']} <span class="i_editinfo sprite"></span>
-                                        <!--自定义说明文字开始:登陆状态下-->
-                                        <span style="font-size:13px;font-weight:normal;">说明1：{$photo_extra['par1']}
-                                        说明2：{$photo_extra['par2']}
-                                        </span>
-                                        <!--自定义说明文字结束-->
                                     </div>
                                     <!--{else}-->
                                     <div class="inline">
                                         {$info['name']}
-                                        <!--自定义说明文字开始-->
-                                        <span style="font-size:13px;font-weight:normal;">说明1：{$photo_extra['par1']}
-                                        说明2：{$photo_extra['par2']}
-                                        </span>
-                                        <!--自定义说明文字结束-->
                                     </div>
                                     <!--{/if}-->
                                 </h1>

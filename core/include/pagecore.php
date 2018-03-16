@@ -7,8 +7,7 @@
  * @copyright : (c)2010 meiu.cn lingter@gmail.com
  */
 class pagecore{
-    
-    function pagecore(){
+    function __construct(){
         $this->output =& loader::lib('output');
         $this->db =& loader::database();
         $this->user =& loader::model('user');

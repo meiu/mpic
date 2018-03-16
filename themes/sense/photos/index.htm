@@ -94,14 +94,6 @@
                                     <span class="name"><a href="{link ctl=photos act=view id=$v['id']}">{$v['name']}</a></span>
                                     <!--{/if}-->
                                     </div>
-
-                                    <!--自定义数据开始-->
-                                    <div class="extra_info" style="line-height:1.8;color:#666;">
-                                        <p>说明1：{$v['extra']['par1']}</p>
-                                        <p>说明2：{$v['extra']['par2']}</p>
-                                    </div>
-                                    <!--自定义数据结束-->
-
                                     <div class="info_col">
                                         <p class="gray">{lang view_nums|`$v['hits']`} ,
                                         {if $show_takentime && $v['taken_time']}

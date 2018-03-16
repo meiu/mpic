@@ -495,7 +495,7 @@ class DB_Expr{
      */
     var $_expr;
     
-    function DB_Expr($expr){
+    function __construct($expr){
         $this->_expr = (string) $expr;
     }
 

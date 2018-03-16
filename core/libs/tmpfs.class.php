@@ -9,7 +9,7 @@
  */
 class tmpfs_cla{
 
-    function tmpfs_cla(){
+    function __construct(){
         $this->targetDir = ROOTDIR.'cache'.DIRECTORY_SEPARATOR.'tmp';
     }
 

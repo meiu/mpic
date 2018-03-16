@@ -214,7 +214,7 @@ class template_mdl{
 		$tag_id = md5(stripslashes($html));
 		foreach ($matches as $v) {
 			if(in_array($v[1], $arr)) {
-				$$v[1] = trim($v[2],'"');
+				eval("\${$v[1]} = trim(\$v[2],'\"');");
 				continue;
 			}
             

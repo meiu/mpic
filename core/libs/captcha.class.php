@@ -94,7 +94,7 @@ class captcha_cla{
      *
      * @param array $config
      */
-    function captcha_cla($config = array())
+    function __construct($config = array())
     {
         isset($_SESSION) || session_start();
 

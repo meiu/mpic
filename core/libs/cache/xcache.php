@@ -31,7 +31,7 @@ class cache_xcache
      *
      * @param 默认的缓存策略 $default_policy
      */
-    function cache_xcache(array $default_policy = null){
+    function __construct(array $default_policy = null){
         if (isset($default_policy['life_time'])){
             $this->_default_policy['life_time'] = (int)$default_policy['life_time'];
         }

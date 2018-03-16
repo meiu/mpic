@@ -3,7 +3,7 @@
 include_once('pclzip.lib.php');
 class zip_cla extends PclZip{   
     
-    function zip_cla(){
+    function __construct(){
         parent::PclZip('');
     }
 
