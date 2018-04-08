@@ -124,7 +124,6 @@ class template_mdl{
         $str = preg_replace("/\{filter:(\w+)(\s+.+?)\}/ie","\$this->do_filter('\\1','\\2')",$str);
         $str = preg_replace("/\{thumbimg(\s+.+?)\}/ies","\$this->makethumbpath('\\1')",$str);*/
 
-
         if(PHP_VERSION<5){
             $str = preg_replace("/\{(\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\}/es", "\$this->addquote('<?php echo \\1;?>')",$str);
             $str = preg_replace("/\{([A-Z_\x7f-\xff][A-Z0-9_\x7f-\xff]*)\}/s", "<?php echo \\1;?>", $str );
@@ -135,36 +134,40 @@ class template_mdl{
             $str = preg_replace("/\{filter:(\w+)(\s+.+?)\}/ie","\$this->do_filter('\\1','\\2')",$str);
             $str = preg_replace("/\{thumbimg(\s+.+?)\}/ies","\$this->makethumbpath('\\1')",$str);
         }else{
-            $str = preg_replace_callback("/\{(\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\}/s",function($r){
-                return $this->addquote('<?php echo '.$r[1].';?>');
-            },$str);
+            $str = preg_replace_callback("/\{(\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\}/s",array($this,'_addquote'),$str);
             $str = preg_replace("/\{([A-Z_\x7f-\xff][A-Z0-9_\x7f-\xff]*)\}/s", "<?php echo \\1;?>", $str );
-            $str = preg_replace_callback("/\{link(\s+.+?)\}/is",function($r){
-                return $this->striplink($r[1]);
-            },$str);
-            $str = preg_replace_callback("/\{lang\s+(.+?)\}/is",function($r){
-                return $this->striplang($r[1]);
-            },$str);
-            $str = preg_replace_callback("/\{mp:(\w+)(\s+[^}]+)\}/i",function($r){
-                return $this->mp_tag($r[1],$r[2], $r[0]);
-            },$str);
-            $str = preg_replace_callback("/\{\/mp\}/i",function($r){
-                return $this->end_mp_tag();
-            },$str);
-            $str = preg_replace_callback("/\{filter:(\w+)(\s+.+?)\}/i",function($r){
-                return $this->do_filter($r[1],$r[2]);
-            },$str);
-            $str = preg_replace_callback("/\{thumbimg(\s+.+?)\}/is",function($r){
-                return $this->makethumbpath($r[1]);
-            },$str);
+            $str = preg_replace_callback("/\{link(\s+.+?)\}/is",array($this,'_striplink'),$str);
+            $str = preg_replace_callback("/\{lang\s+(.+?)\}/is",array($this,'_striplang'),$str);
+            $str = preg_replace_callback("/\{mp:(\w+)(\s+[^}]+)\}/i",array($this,'_mp_tag'),$str);
+            $str = preg_replace_callback("/\{\/mp\}/i",array($this,'_end_mp_tag'),$str);
+            $str = preg_replace_callback("/\{filter:(\w+)(\s+.+?)\}/i",array($this,'_filter'),$str);
+            $str = preg_replace_callback("/\{thumbimg(\s+.+?)\}/is",array($this,'_thumbimg'),$str);
         }
         
         $str = "<?php if(!defined('IN_MEIU')) exit('Access Denied'); ?>" . $str;
         return $str;
     }
     
-    function _replace_callback($str){
-
+    function _thumbimg($r){
+        return $this->makethumbpath($r[1]);
+    }
+    function _filter($r){
+        return $this->do_filter($r[1],$r[2]);
+    }
+    function _mp_tag($r){
+        return $this->mp_tag($r[1],$r[2], $r[0]);
+    }
+    function _end_mp_tag($r){
+        return $this->end_mp_tag();
+    }
+    function _striplang($r){
+        return $this->striplang($r[1]);
+    }
+    function _striplink($r){
+        return $this->striplink($r[1]);
+    }
+    function _addquote($r){
+        return $this->addquote('<?php echo '.$r[1].';?>');
     }
 
     function striplang($var) {
@@ -209,37 +212,37 @@ class template_mdl{
         preg_match_all("/\s+([a-zA-Z0-9_\-]+)\=([^\"\s]+|\"[^\"]+\")/i", stripslashes($data), $matches, PREG_SET_ORDER);
 
         $arr = array('action','start','num','cache','page', 'urlrule', 'return');
-		$tools = array('sql');
-		$datas = array();
-		$tag_id = md5(stripslashes($html));
-		foreach ($matches as $v) {
-			if(in_array($v[1], $arr)) {
-				eval("\${$v[1]} = trim(\$v[2],'\"');");
-				continue;
-			}
+        $tools = array('sql');
+        $datas = array();
+        $tag_id = md5(stripslashes($html));
+        foreach ($matches as $v) {
+            if(in_array($v[1], $arr)) {
+                eval("\${$v[1]} = trim(\$v[2],'\"');");
+                continue;
+            }
             
-			$datas[$v[1]] = trim($v[2],'"');
-		}
+            $datas[$v[1]] = trim($v[2],'"');
+        }
 
-		$str = '<?php ';
-		$num = isset($num) && intval($num) ? intval($num) : 20;
-		$cache = isset($cache) && intval($cache) ? intval($cache) : 0;
-		$return = isset($return) && trim($return) ? trim($return) : 'data';
+        $str = '<?php ';
+        $num = isset($num) && intval($num) ? intval($num) : 20;
+        $cache = isset($cache) && intval($cache) ? intval($cache) : 0;
+        $return = isset($return) && trim($return) ? trim($return) : 'data';
 
-		if (isset($urlrule)){
+        if (isset($urlrule)){
             $urlrule = str_replace('[#page#]',rawurlencode('[#page#]'),$urlrule);
         }else{
             $urlrule = '';
         }
 
-		if (!empty($cache) && !isset($page)) {
-			$str .= '$tag_cache_name = md5(implode(\'&\','.$this->arr_to_code($datas).').\''.$tag_id.'\');';
+        if (!empty($cache) && !isset($page)) {
+            $str .= '$tag_cache_name = md5(implode(\'&\','.$this->arr_to_code($datas).').\''.$tag_id.'\');';
             $str .= '$cache_lib =& loader::lib("cache"); ';
             $str .= 'if(!$'.$return.' = $cache_lib->get($tag_cache_name)){';
-		}
+        }
 
         if (in_array($op,$tools)) {
-			switch ($op) {
+            switch ($op) {
                 case 'sql':
                     if (isset($start) && intval($start)) {
                         $limit = intval($start).','.$num;
@@ -291,9 +294,9 @@ class template_mdl{
             
         }
         if (!empty($cache) && !isset($page)) {
-			$str .= 'if(!empty($'.$return.')){ $cache_lib->set($tag_cache_name, $'.$return.',array("life_time" => '.$cache.'));}';
-			$str .= '}';
-		}
+            $str .= 'if(!empty($'.$return.')){ $cache_lib->set($tag_cache_name, $'.$return.',array("life_time" => '.$cache.'));}';
+            $str .= '}';
+        }
 
         return $str.' ?>';
     }
@@ -329,7 +332,7 @@ class template_mdl{
         }
         return false;
     }
-    
+
     /**
      * 转义 // 为 /
      *

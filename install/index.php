@@ -167,29 +167,55 @@ if($method == 'license'){
             if(empty($dbname)) {
                 show_msg('dbname_invalid', $dbname, 0);
             } else {
-                if(!$link = @mysqli_connect($dbhost, $dbuser, $dbpw,null,$dbport)) {
-                    $errno = mysqli_errno($link);
-                    $error = mysqli_error($link);
-                    if($errno == 1045) {
-                        show_msg('database_errno_1045', $error, 0);
-                    } elseif($errno == 2003) {
-                        show_msg('database_errno_2003', $error, 0);
-                    } else {
-                        show_msg('database_connect_error', $error, 0);
+                if(function_exists('mysqli_connect')){
+                    if(!$link = @mysqli_connect($dbhost, $dbuser, $dbpw,null,$dbport)) {
+                        $errno = mysqli_errno($link);
+                        $error = mysqli_error($link);
+                        if($errno == 1045) {
+                            show_msg('database_errno_1045', $error, 0);
+                        } elseif($errno == 2003) {
+                            show_msg('database_errno_2003', $error, 0);
+                        } else {
+                            show_msg('database_connect_error', $error, 0);
+                        }
                     }
-                }
 
-                if(mysqli_get_server_info() > '4.1') {
-                    mysqli_query($link,"SET　NAMES 'utf8'");
-                    mysqli_query($link, "CREATE DATABASE IF NOT EXISTS `$dbname` DEFAULT CHARACTER SET utf8");
-                } else {
-                    mysqli_query($link,"CREATE DATABASE IF NOT EXISTS `$dbname`");
-                }
+                    if(mysqli_get_server_info($link) > '4.1') {
+                        mysqli_query($link,"SET　NAMES 'utf8'");
+                        mysqli_query($link, "CREATE DATABASE IF NOT EXISTS `$dbname` DEFAULT CHARACTER SET utf8");
+                    } else {
+                        mysqli_query($link,"CREATE DATABASE IF NOT EXISTS `$dbname`");
+                    }
 
-                if(mysqli_errno()) {
-                    show_msg('database_errno_1044', mysql_error(), 0);
+                    if(mysqli_errno($link)) {
+                        show_msg('database_errno_1044', mysql_error(), 0);
+                    }
+                    mysqli_close($link);
+                }else{
+                    if(!$link = @mysql_connect($dbhost.':'.$dbport, $dbuser, $dbpw)) {
+                        $errno = mysql_errno($link);
+                        $error = mysql_error($link);
+                        if($errno == 1045) {
+                            show_msg('database_errno_1045', $error, 0);
+                        } elseif($errno == 2003) {
+                            show_msg('database_errno_2003', $error, 0);
+                        } else {
+                            show_msg('database_connect_error', $error, 0);
+                        }
+                    }
+
+                    if(mysql_get_server_info() > '4.1') {
+                        mysql_query("SET　NAMES 'utf8'");
+                        mysql_query("CREATE DATABASE IF NOT EXISTS `$dbname` DEFAULT CHARACTER SET utf8", $link);
+                    } else {
+                        mysql_query("CREATE DATABASE IF NOT EXISTS `$dbname`", $link);
+                    }
+
+                    if(mysql_errno()) {
+                        show_msg('database_errno_1044', mysql_error(), 0);
+                    }
+                    mysql_close($link);
                 }
-                mysqli_close($link);
             }
 
             if(strpos($tablepre, '.') !== false) {
