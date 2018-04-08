@@ -236,7 +236,10 @@ class template_mdl{
         }
 
         if (!empty($cache) && !isset($page)) {
-            $str .= '$tag_cache_name = md5(implode(\'&\','.$this->arr_to_code($datas).').\''.$tag_id.'\');';
+            $str .= '$user_mdl = loader::model(\'user\');';
+            $str .= '$loggedin = $user_mdl->loggedin()?1:0;';
+
+            $str .= '$tag_cache_name = md5(implode(\'&\','.$this->arr_to_code($datas).')."'.$tag_id.'_$loggedin");';
             $str .= '$cache_lib =& loader::lib("cache"); ';
             $str .= 'if(!$'.$return.' = $cache_lib->get($tag_cache_name)){';
         }
