@@ -627,7 +627,7 @@ function show_next_step($step, $error_code) {
 function check_db($dbhost, $dbuser, $dbpw, $dbname, $tablepre,$dbport) {
     if(!function_exists('mysqli_connect')) {
         if(function_exists('mysql_connect')){
-            check_db_old($dbhost, $dbuser, $dbpw, $dbname, $tablepre,$dbport);
+            return check_db_old($dbhost, $dbuser, $dbpw, $dbname, $tablepre,$dbport);
         }
         show_msg('undefine_func', 'mysqli_connect', 0);
     }
