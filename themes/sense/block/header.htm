@@ -42,6 +42,7 @@
 				{lang new_update_available|`$update_info['version']`|`$update_info['pubdate']`} 
 				<a href="{link ctl=update act=core version=$update_info['version']}">{lang update_immediately}</a> {lang or} 
 				<a href="{$update_info['package']}">{lang update_manually}</a>
+				{$update_info['note']}
 			{/if}
 		</div>
 		<!--{/if}-->

@@ -273,6 +273,9 @@ function check_update(){
         if(isset($result['pubdate'])){
             $setting_mdl->set_conf('update.pubdate',$result['pubdate']);
         }
+        if(isset($result['note'])){
+            $setting_mdl->set_conf('update.note',$result['note']);
+        }
         return $result;
     }
 }
